@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getSearchByString } from "../Meals/service";
+import { getSearchByString } from "../Products/service";
 
 interface CustomSearchInputProps {
   onSearch: (data: string[]) => void;
