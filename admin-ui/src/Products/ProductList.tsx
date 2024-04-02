@@ -17,9 +17,9 @@ import { NutritionShow } from "../Nutrition/NutritionShow";
 import CustomSearchInput from "../components/CustomSearchInput";
 
 export const ProductList = (props: ListProps) => {
-  const [data, setData] = useState<String[]>([]);
+  const [data, setData] = useState<string[]>([]);
 
-  const handleSearchResult = (data: String[]) => {
+  const handleSearchResult = (data: string[]) => {
     setData(data);
   };
 
