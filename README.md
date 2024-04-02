@@ -114,28 +114,6 @@ If you want to only create users. Just run the seed-users file alone.
 ```
 cat ./backend/seed-users.sql | docker-compose exec -T db /usr/bin/psql -U postgres -f -
 ```
-
-To import recipes and products, go to the folder data and run these import commands to import recipes and products:
-`cd data`
-`bun importRecipes.ts` to import the meals and ingredients
-and
-`bun importProducts.ts` to import the products.
-
-On Linux or MacOS:
-
-```
-cat ./backend/seed.sql | docker-compose exec -T db /usr/bin/psql -U postgres -f -
-cat ./backend/meal_seed.sql | docker-compose exec -T db /usr/bin/psql -U postgres -f -
-```
-
-On Windows (Powershell):
-
-```
-Get-Content .\backend\seed.sql | docker-compose exec -T db /usr/bin/psql -U postgres -f -
-
-```
-
-
 Pay careful attention to the output as it will include the randomly generated passwords for the defaul users. This will look something like the following but the passwords will be unique each time:
 
 ```
@@ -147,6 +125,43 @@ psql:<stdin>:114: NOTICE:     User2 login: user2@example.com        10d3b4cba908
 DO
 COMMIT
 ```
+
+To import recipes and products, go to the folder data and set the environment variable and run these import commands to import recipes and products:
+
+`cd data`
+
+Before you can run scripts you need to set the `DB_URL` environment variable. You can do so in the bash shell with the following command.
+
+```
+$ export DB_URL="postgresql://postgres:databasepassword@127.0.0.1:5433/postgres"
+```
+
+Or
+
+Create a .env file under `mealplanner/data` folder with the values
+```
+DB_URL="postgresql://postgres:dbpassword@servername:port/postgres
+```
+
+Or
+
+If you are using .envrc use
+```
+export DB_URL="postgresql://postgres:dbpassword@servername:port/postgres
+```
+In command prompt give 
+```
+direnv allow
+```
+Then run,
+
+`bun importRecipes.ts` to import the meals and ingredients
+and
+`bun importProducts.ts` to import the products.
+
+
+
+
 
 ## For v2
 
