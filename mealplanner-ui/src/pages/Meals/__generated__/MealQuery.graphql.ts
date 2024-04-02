@@ -79,6 +79,13 @@ export type MealQuery$data = {
       readonly vitE: any | null;
       readonly vitK: any | null;
     } | null;
+    readonly ingredients: {
+      readonly nodes: ReadonlyArray<{
+        readonly name: string;
+        readonly quantity: any;
+        readonly unit: string;
+      }>;
+    };
   } | null;
 };
 export type MealQuery = {

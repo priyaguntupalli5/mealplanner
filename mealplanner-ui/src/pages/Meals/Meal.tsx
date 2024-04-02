@@ -82,6 +82,14 @@ const mealQuery = graphql`
         vitD
         vitE
         vitK
+
+      }
+      ingredients {
+        nodes {
+          name
+          quantity
+          unit
+        }
       }
     }
   }
@@ -123,6 +131,15 @@ export const Meal = () => {
       </span>
     ));
   };
+
+
+  useEffect(() => {
+    console.log(meal)
+  
+  }, [meal])
+  
+
+
   return (
     <>
       <Box
