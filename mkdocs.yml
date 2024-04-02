@@ -1,7 +1,18 @@
+# to get started:
+# pip install mkdocs
+# pip install mkdocs-mermaid2-plugin
+
 site_name: Mealplanner (Good Meal Plan) Guide
 
 nav:
   - Home: index.md
+  - Front End: 
+    - Overview: front-end.md
+    - Logging In: logging-in.md
+    - Viewing Meals: viewing-meals.md
+  - Admin UI: 
+    - Overview: admin-ui.md
+    - Manage User: manage-users.md
 
 theme:
   name: readthedocs
