@@ -4,7 +4,7 @@ nav:
   - Home: index.md
 
 theme:
-  name: mkdocs
+  name: readthedocs
   nav_style: dark
   highlightjs: true
 
