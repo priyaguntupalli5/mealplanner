@@ -140,7 +140,7 @@ export const MealPlans = () => {
       {data.mealPlans ? (
         <Grid container spacing={2} margin="1rem" columns={4}>
           {data.mealPlans?.edges.map(({ node }) => {
-          if ((searchType === 'name' && node.nameEn.toLowerCase().includes(searched)) && !(node.isTemplate)|| (searchType === 'tags' && selectedTags.every(tag => node.tags?.includes(tag)))) {
+          if ((searchType === 'name' && node.nameEn.toLowerCase().includes(searched)) || (searchType === 'tags' && selectedTags.every(tag => node.tags?.includes(tag)))) {
               return (
                 <MealPlanCard
                   mealplan={node}
