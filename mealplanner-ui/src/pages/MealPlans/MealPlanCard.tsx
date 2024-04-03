@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { MealPlanNode } from "../../state/types";
 import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, IconButtonProps, ImageList, ImageListItem, Typography, styled, useTheme, useMediaQuery, Chip } from "@mui/material";
 import { ShoppingCart, DeleteTwoTone, ContentCopy, ExpandMore, Favorite } from "@mui/icons-material";
@@ -168,7 +168,7 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
           />
           {startDate && (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Chip label={"Starting: " + startDate.format("YYYY-MM-DD")} />
+              <Chip label={"Starting: " + startDate.format("DD-MMM-YYYY")} />
             </div>
           )}
           <ImageList sx={{ width: 350, height: 150 }} cols={3} rowHeight={164}>
