@@ -227,7 +227,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
           </Box>
           <Box
             sx={{
-              paddingLeft: "15%",
               ".css-10rztul-MuiInputBase-root-MuiOutlinedInput-root": {
                 borderRadius: "10px",
               },
@@ -237,8 +236,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
               {!data.isTemplate ? (
                 <DatePicker
                   sx={{
-                    // borderRadius: "10px",
-                    // maxWidth: "60%",
                     ".css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
                       color: `${theme.palette.primary.contrastText}`,
                       padding: "10px",
