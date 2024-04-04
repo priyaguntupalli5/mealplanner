@@ -167,10 +167,10 @@ export const CreateMealPlan = ({ connection, refetch }: { connection: string, re
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label="Starting Date"
-                    format="DD-MMM-YYYY"
+                    format="DD-MM-YYYY"
                     onChange={(newValue: Dayjs | null) => {
                     if (newValue !== null) {
-                      const formatedDate = dayjs(newValue).format("DD-MM-YYYY");
+                      const formatedDate = dayjs(newValue).format("YYYY-MM-DD");
                       setStartDate(formatedDate);
                     }
                     }}
