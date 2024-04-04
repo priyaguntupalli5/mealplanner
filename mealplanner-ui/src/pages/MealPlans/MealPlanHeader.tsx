@@ -246,7 +246,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                       color: `${theme.palette.primary.contrastText}`,
                     },
                   }}
-                  label="Edit Date"
                   format="DD-MMM-YYYY"
                   value={dayjs(startDate)}
                   onChange={async (newDate: Dayjs | null) => {
