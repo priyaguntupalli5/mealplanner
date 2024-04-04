@@ -52,8 +52,6 @@ const mealQuery = graphql`
         dietaryFiberPercent
         dietaryFiberUnit
         iron
-        nutritionableId
-        nutritionableType
         potassium
         protein
         proteinPercent

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d484e30961a0ec060f8b9cb5d4363220>>
+ * @generated SignedSource<<0355d90dd25d726ecdcb8b6a26f8696a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,8 +48,6 @@ export type MealQuery$data = {
       readonly dietaryFiberPercent: any | null;
       readonly dietaryFiberUnit: string | null;
       readonly iron: any | null;
-      readonly nutritionableId: any;
-      readonly nutritionableType: string;
       readonly potassium: any | null;
       readonly protein: any | null;
       readonly proteinPercent: any | null;
@@ -331,227 +329,213 @@ v34 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "nutritionableId",
+  "name": "potassium",
   "storageKey": null
 },
 v35 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "nutritionableType",
+  "name": "protein",
   "storageKey": null
 },
 v36 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "potassium",
+  "name": "proteinPercent",
   "storageKey": null
 },
 v37 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "protein",
+  "name": "proteinUnit",
   "storageKey": null
 },
 v38 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "proteinPercent",
+  "name": "saturatedFat",
   "storageKey": null
 },
 v39 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "proteinUnit",
+  "name": "saturatedFatPercent",
   "storageKey": null
 },
 v40 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "saturatedFat",
+  "name": "saturatedFatUnit",
   "storageKey": null
 },
 v41 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "saturatedFatPercent",
+  "name": "servingSize",
   "storageKey": null
 },
 v42 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "saturatedFatUnit",
+  "name": "servingSizeText",
   "storageKey": null
 },
 v43 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "servingSize",
+  "name": "servingSizeUnit",
   "storageKey": null
 },
 v44 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "servingSizeText",
+  "name": "servingsPerContainer",
   "storageKey": null
 },
 v45 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "servingSizeUnit",
+  "name": "sodium",
   "storageKey": null
 },
 v46 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "servingsPerContainer",
+  "name": "sodiumPercent",
   "storageKey": null
 },
 v47 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "sodium",
+  "name": "sodiumUnit",
   "storageKey": null
 },
 v48 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "sodiumPercent",
+  "name": "totalFatPercent",
   "storageKey": null
 },
 v49 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "sodiumUnit",
+  "name": "totalFat",
   "storageKey": null
 },
 v50 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalFatPercent",
+  "name": "totalFatUnit",
   "storageKey": null
 },
 v51 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalFat",
+  "name": "totalSugar",
   "storageKey": null
 },
 v52 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalFatUnit",
+  "name": "totalSugarPercent",
   "storageKey": null
 },
 v53 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalSugar",
+  "name": "totalSugarUnit",
   "storageKey": null
 },
 v54 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalSugarPercent",
+  "name": "transFat",
   "storageKey": null
 },
 v55 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalSugarUnit",
+  "name": "transFatPercent",
   "storageKey": null
 },
 v56 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "transFat",
+  "name": "transFatUnit",
   "storageKey": null
 },
 v57 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "transFatPercent",
+  "name": "vitA",
   "storageKey": null
 },
 v58 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "transFatUnit",
+  "name": "vitB12",
   "storageKey": null
 },
 v59 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "vitA",
+  "name": "vitB6",
   "storageKey": null
 },
 v60 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "vitB12",
+  "name": "vitC",
   "storageKey": null
 },
 v61 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "vitB6",
+  "name": "vitD",
   "storageKey": null
 },
 v62 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "vitC",
+  "name": "vitE",
   "storageKey": null
 },
 v63 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "vitD",
-  "storageKey": null
-},
-v64 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "vitE",
-  "storageKey": null
-},
-v65 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "vitK",
   "storageKey": null
 },
-v66 = {
+v64 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -642,9 +626,7 @@ return {
               (v60/*: any*/),
               (v61/*: any*/),
               (v62/*: any*/),
-              (v63/*: any*/),
-              (v64/*: any*/),
-              (v65/*: any*/)
+              (v63/*: any*/)
             ],
             "storageKey": null
           }
@@ -739,29 +721,27 @@ return {
               (v61/*: any*/),
               (v62/*: any*/),
               (v63/*: any*/),
-              (v64/*: any*/),
-              (v65/*: any*/),
-              (v66/*: any*/)
+              (v64/*: any*/)
             ],
             "storageKey": null
           },
-          (v66/*: any*/)
+          (v64/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "607c7ec811c977c2c9114035766a23f1",
+    "cacheID": "a9c5f5ba4ee7da31dfc9d8c2b11eb7ee",
     "id": null,
     "metadata": {},
     "name": "MealQuery",
     "operationKind": "query",
-    "text": "query MealQuery(\n  $mealId: BigInt!\n) {\n  meal(rowId: $mealId) {\n    rowId\n    code\n    nameEn\n    nameFr\n    tags\n    descriptionEn\n    descriptionFr\n    categories\n    photoUrl\n    videoUrl\n    method\n    totalCost\n    servingCost\n    tips\n    servingsSize\n    servingsSizeUnit\n    prepTime\n    cookTime\n    portions\n    nutritionRating\n    nutrition {\n      calcium\n      calories\n      carbohydrate\n      carbohydratePercent\n      carbohydrateUnit\n      cholesterol\n      cholesterolPercent\n      cholesterolUnit\n      dietaryFiber\n      dietaryFiberPercent\n      dietaryFiberUnit\n      iron\n      nutritionableId\n      nutritionableType\n      potassium\n      protein\n      proteinPercent\n      proteinUnit\n      saturatedFat\n      saturatedFatPercent\n      saturatedFatUnit\n      servingSize\n      servingSizeText\n      servingSizeUnit\n      servingsPerContainer\n      sodium\n      sodiumPercent\n      sodiumUnit\n      totalFatPercent\n      totalFat\n      totalFatUnit\n      totalSugar\n      totalSugarPercent\n      totalSugarUnit\n      transFat\n      transFatPercent\n      transFatUnit\n      vitA\n      vitB12\n      vitB6\n      vitC\n      vitD\n      vitE\n      vitK\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query MealQuery(\n  $mealId: BigInt!\n) {\n  meal(rowId: $mealId) {\n    rowId\n    code\n    nameEn\n    nameFr\n    tags\n    descriptionEn\n    descriptionFr\n    categories\n    photoUrl\n    videoUrl\n    method\n    totalCost\n    servingCost\n    tips\n    servingsSize\n    servingsSizeUnit\n    prepTime\n    cookTime\n    portions\n    nutritionRating\n    nutrition {\n      calcium\n      calories\n      carbohydrate\n      carbohydratePercent\n      carbohydrateUnit\n      cholesterol\n      cholesterolPercent\n      cholesterolUnit\n      dietaryFiber\n      dietaryFiberPercent\n      dietaryFiberUnit\n      iron\n      potassium\n      protein\n      proteinPercent\n      proteinUnit\n      saturatedFat\n      saturatedFatPercent\n      saturatedFatUnit\n      servingSize\n      servingSizeText\n      servingSizeUnit\n      servingsPerContainer\n      sodium\n      sodiumPercent\n      sodiumUnit\n      totalFatPercent\n      totalFat\n      totalFatUnit\n      totalSugar\n      totalSugarPercent\n      totalSugarUnit\n      transFat\n      transFatPercent\n      transFatUnit\n      vitA\n      vitB12\n      vitB6\n      vitC\n      vitD\n      vitE\n      vitK\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "13a8fcd23e9e92271bb45141568e3c5e";
+(node as any).hash = "1b5e0c2d163cfa76069d51b36639a663";
 
 export default node;
