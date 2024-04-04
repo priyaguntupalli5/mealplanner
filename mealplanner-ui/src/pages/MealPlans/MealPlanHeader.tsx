@@ -10,10 +10,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { graphql } from "babel-plugin-relay/macro";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFragment, useLazyLoadQuery } from "react-relay";
 import { useNavigate } from "react-router";
-import { updateMealPlanName } from "../../state/state";
+import { initState, updateMealPlanName } from "../../state/state";
 import { MealPlanHeaderAllUsersQuery } from "./__generated__/MealPlanHeaderAllUsersQuery.graphql";
 import { MealPlanHeader_mealPlan$key } from "./__generated__/MealPlanHeader_mealPlan.graphql";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -58,6 +58,11 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
   let startDate = dayjs(data.startDate).format("YYYY-MM-DD");
 
   let users = useLazyLoadQuery<MealPlanHeaderAllUsersQuery>(query, {});
+
+  useEffect(() => {
+    console.log(startDate);
+  }, [startDate])
+  
 
   let allUsers = users.people?.nodes.map((user) => {
     return { label: user.fullName, id: user.rowId };
@@ -135,7 +140,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                 display="inline-flex"
                 justifyContent="space-between"
                 padding="0.5rem 0"
-                marginLeft="1rem"
                 width="9rem"
                 maxWidth="9rem"
                 whiteSpace="nowrap"
@@ -210,7 +214,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                 width="10rem"
                 maxWidth="9rem"
                 whiteSpace="nowrap"
-                overflow="hidden"
                 onClick={(e) => {
                   if (!data.isTemplate) {
                     setIsEditUser(true);
@@ -236,6 +239,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
               {!data.isTemplate ? (
                 <DatePicker
                   sx={{
+                    marginLeft: "20px",
                     ".css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
                       color: `${theme.palette.primary.contrastText}`,
                       padding: "10px",
@@ -248,6 +252,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                     },
                   }}
                   label="Edit Date"
+                  format="DD-MMM-YYYY"
                   value={dayjs(startDate)}
                   onChange={async (newDate: Dayjs | null) => {
                     if (newDate !== null) {
