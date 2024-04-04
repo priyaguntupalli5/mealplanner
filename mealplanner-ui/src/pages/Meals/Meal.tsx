@@ -5,6 +5,7 @@ import {
   IconButton,
   Paper,
   Rating,
+  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -13,6 +14,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
 import { useParams } from "react-router";
 import { MealQuery } from "./__generated__/MealQuery.graphql";
+import React from "react";
 
 const mealQuery = graphql`
   query MealQuery($mealId: BigInt!) {
@@ -38,7 +40,50 @@ const mealQuery = graphql`
       portions
       nutritionRating
       nutrition {
-        id
+        calcium
+        calories
+        carbohydrate
+        carbohydratePercent
+        carbohydrateUnit
+        cholesterol
+        cholesterolPercent
+        cholesterolUnit
+        dietaryFiber
+        dietaryFiberPercent
+        dietaryFiberUnit
+        iron
+        nutritionableId
+        nutritionableType
+        potassium
+        protein
+        proteinPercent
+        proteinUnit
+        saturatedFat
+        saturatedFatPercent
+        saturatedFatUnit
+        servingSize
+        servingSizeText
+        servingSizeUnit
+        servingsPerContainer
+        sodium
+        sodiumPercent
+        sodiumUnit
+        totalFatPercent
+        totalFat
+        totalFatUnit
+        totalSugar
+        totalSugarPercent
+        totalSugarUnit
+        transFat
+        transFatPercent
+        transFatUnit
+        vitA
+        vitB12
+        vitB6
+        vitC
+        vitD
+        vitE
+        vitK
       }
     }
   }
@@ -52,6 +97,11 @@ export const Meal = () => {
     { fetchPolicy: "store-or-network" }
   );
   const meal = node.meal;
+  const data = node.meal?.nutrition;
+  const nutritionData = data
+  ? Object.entries(data).filter(([key, value]) => value !== null).map(([key, value]) => <React.Fragment>{key}: {value}<br /></React.Fragment>)
+  : 'No data';
+  
   const theme = useTheme();
   const tagStyle = {
     color: "white",
@@ -113,6 +163,7 @@ export const Meal = () => {
             {displayCost()}
           </Typography>
         </Paper>
+        <Tooltip title={nutritionData}>
         <Paper
           sx={{
             textAlign: "center",
@@ -135,6 +186,7 @@ export const Meal = () => {
             readOnly
           />
         </Paper>
+        </Tooltip>
         <Typography
           variant="body1"
           lineHeight="2rem"

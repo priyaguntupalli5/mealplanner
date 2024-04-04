@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cfb8ec032e2e32784428e0a0387e651b>>
+ * @generated SignedSource<<e116a91719e25bab89f8f1cca6f2cc61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,31 +10,31 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CategoryT = "BREAKFAST" | "DINNER" | "LUNCH" | "SNACK" | "%future added value";
-export type MealsQuery$variables = Record<PropertyKey, never>;
+export type CategoryT = "BREAKFAST" | "LUNCH" | "DINNER" | "SNACK" | "%future added value";
+export type MealsQuery$variables = {};
 export type MealsQuery$data = {
-  readonly gqLocalState: {
-    readonly selectedMealTags: ReadonlyArray<string> | null | undefined;
-  };
   readonly meals: {
     readonly nodes: ReadonlyArray<{
-      readonly categories: ReadonlyArray<CategoryT | null | undefined> | null | undefined;
-      readonly code: string;
-      readonly descriptionEn: string | null | undefined;
-      readonly descriptionFr: string | null | undefined;
-      readonly nameEn: string;
-      readonly nameFr: string | null | undefined;
-      readonly photoUrl: string | null | undefined;
       readonly rowId: any;
-      readonly tags: ReadonlyArray<string | null | undefined> | null | undefined;
-      readonly videoUrl: string | null | undefined;
+      readonly nameEn: string;
+      readonly nameFr: string | null;
+      readonly descriptionEn: string | null;
+      readonly descriptionFr: string | null;
+      readonly categories: ReadonlyArray<CategoryT | null> | null;
+      readonly tags: ReadonlyArray<string | null> | null;
+      readonly code: any | null;
+      readonly photoUrl: string | null;
+      readonly videoUrl: string | null;
     }>;
   } | null;
+  readonly gqLocalState: {
+    readonly selectedMealTags: ReadonlyArray<string> | null;
+  };
   readonly " $fragmentSpreads": FragmentRefs<"MealTags_tags">;
 };
 export type MealsQuery = {
-  response: MealsQuery$data;
   variables: MealsQuery$variables;
+  response: MealsQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
