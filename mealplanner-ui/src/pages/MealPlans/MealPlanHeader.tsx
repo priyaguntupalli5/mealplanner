@@ -10,10 +10,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { graphql } from "babel-plugin-relay/macro";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFragment, useLazyLoadQuery } from "react-relay";
 import { useNavigate } from "react-router";
-import { initState, updateMealPlanName } from "../../state/state";
+import { updateMealPlanName } from "../../state/state";
 import { MealPlanHeaderAllUsersQuery } from "./__generated__/MealPlanHeaderAllUsersQuery.graphql";
 import { MealPlanHeader_mealPlan$key } from "./__generated__/MealPlanHeader_mealPlan.graphql";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -58,11 +58,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
   let startDate = dayjs(data.startDate).format("YYYY-MM-DD");
 
   let users = useLazyLoadQuery<MealPlanHeaderAllUsersQuery>(query, {});
-
-  useEffect(() => {
-    console.log(startDate);
-  }, [startDate])
-  
 
   let allUsers = users.people?.nodes.map((user) => {
     return { label: user.fullName, id: user.rowId };
