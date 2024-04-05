@@ -70,7 +70,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
 
   return (
     <section
-      id="section"
       style={{
         border: `2px solid ${theme.palette.primary.main}`,
         borderRadius: "10px",
@@ -78,7 +77,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
       }}
     >
       <Box
-        id="box1"
         display="flex"
         flexDirection="row"
         justifyContent={"space-between"}
@@ -86,7 +84,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
         displayPrint={"none"}
       >
         <Box
-          id="box2"
           sx={{
             alignItems: "center",
             justifyContent: "flex-start",
@@ -94,7 +91,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
           }}
         >
           <Box
-            id="box3"
             sx={{
               justifyContent: "flex-start",
               display: "inline-flex",
@@ -102,12 +98,11 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
               width: "100%",
             }}
           >
-            <Box id="box4">
+            <Box>
               <IconButton onClick={() => navigate("/mealplans")} color="info">
                 <ArrowBackIosNewIcon />
               </IconButton>
             </Box>{" "}
-            {/*close box4 */}
             {isEditName ? (
               <TextField
                 id="filled-basic"
@@ -141,7 +136,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                 maxWidth={"60%"}
                 color="primary.contrastText"
                 variant={"h5"}
-                // width="12rem"
                 defaultValue={data.nameEn}
                 onClick={(e) => {
                   setIsEditName(true);
@@ -153,12 +147,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
             <Typography padding="0.75rem 1rem"></Typography>
             {isEditUser ? (
               <Autocomplete
-                // options={[
-                //   { label: "Admin", id: 1 },
-                //   { label: "Meal Designer", id: 2 },
-                //   { label: "User 1", id: 3 },
-                //   { label: "User 2", id: 4 },
-                // ]}
                 sx={{
                   ".css-i4bv87-MuiSvgIcon-root": {
                     color: "primary.contrastText",
@@ -226,7 +214,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
 
                     ".css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
                       color: `${theme.palette.primary.contrastText}`,
-                      // padding: "1rem 1rem",
                       padding: "0.5rem",
                     },
                     ".css-i4bv87-MuiSvgIcon-root": {
@@ -261,9 +248,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
               )}
             </LocalizationProvider>
           </Box>{" "}
-          {/*close box3 */}
         </Box>{" "}
-        {/*close box2 */}
         <Box display="inline-flex" id="icons">
           <IconButton onClick={() => window.print()} sx={{ displayPrint: "none" }}>
             <Print htmlColor={`${theme.palette.primary.contrastText}`}></Print>
@@ -290,9 +275,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
             )}
           </IconButton>
         </Box>{" "}
-        {/*close icons */}
       </Box>{" "}
-      {/*close box1 */}
       {editHeader ? (
         <Box
           style={{
