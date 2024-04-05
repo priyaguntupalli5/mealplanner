@@ -220,6 +220,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                 <DatePicker
                   sx={{
                     maxWidth: "12rem",
+                    minWidth: "11rem",
                     marginLeft: "1rem",
                     margin: "0 0.5rem",
 
