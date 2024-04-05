@@ -139,9 +139,9 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                 padding="0.5rem 0"
                 overflow="hidden"
                 maxWidth={"60%"}
-                noWrap={true}
                 color="primary.contrastText"
                 variant={"h5"}
+                // width="12rem"
                 defaultValue={data.nameEn}
                 onClick={(e) => {
                   setIsEditName(true);
