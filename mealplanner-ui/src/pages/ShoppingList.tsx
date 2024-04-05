@@ -150,7 +150,7 @@ export const ShoppingList = () => {
               <TableRow>
                 <TableCell style={{ color: "#000" }}>Ingredient</TableCell>
                 <TableCell style={{ color: "#000" }}>Associated Meal</TableCell>
-                <TableCell style={{ color: "#000" }}>Quantity/Unit</TableCell>
+                <TableCell style={{ color: "#000" }}>Quantity/Unit Per Meal</TableCell>
                 <TableCell style={{ color: "#000" }}>Suggested Product</TableCell>
               </TableRow>
             </TableHead>
