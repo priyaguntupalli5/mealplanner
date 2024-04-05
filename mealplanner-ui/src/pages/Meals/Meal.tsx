@@ -288,12 +288,11 @@ export const Meal = () => {
             <Typography paddingBottom="1em">{meal?.descriptionFr}</Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant="h6"> Ingredients </Typography>
             <Typography
               variant="body1"
               sx={{
-                "#ingredientsTable tbody tr:nth-child(odd)": {
-                  backgroundColor: "#EEEEEE" /* Slightly darker gray for odd rows */,
+                "#ingredientsTable tbody tr:nth-child(even)": {
+                  backgroundColor: "#E8F5E9" /* Slightly darker gray for odd rows */,
                 },
                 "#ingredientsTable": {
                   border: "1px solid #E0E0E0",
@@ -307,8 +306,8 @@ export const Meal = () => {
               <>
                 <table id="ingredientsTable" cellSpacing="0" cellPadding="0">
                   <thead>
-                    <tr>
-                      <th style={{ textAlign: "left" }}>Name</th>
+                    <tr style={{backgroundColor: "#E8F5E9"}}>
+                      <th style={{ textAlign: "left" }}>Ingredients</th>
                       <th style={{ textAlign: "center" }}>Qtt</th>
                       <th style={{ textAlign: "center" }}>Unit</th>
                     </tr>
