@@ -19,7 +19,6 @@ export function Footer() {
         <Typography variant="body1" align="center">
           For Greener Village. By Civic Tech Fredericton.
         </Typography>
-          
         <Typography variant="body2" align="center">
           If you run into issues or have any suggestions or questions, please
           feel free to post your{" "}
