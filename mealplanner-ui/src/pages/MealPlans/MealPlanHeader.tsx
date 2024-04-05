@@ -19,7 +19,7 @@ import { MealPlanHeader_mealPlan$key } from "./__generated__/MealPlanHeader_meal
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from "dayjs";
 
 const fragment = graphql`
   fragment MealPlanHeader_mealPlan on MealPlan {
@@ -70,6 +70,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
 
   return (
     <section
+      id="section"
       style={{
         border: `2px solid ${theme.palette.primary.main}`,
         borderRadius: "10px",
@@ -77,6 +78,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
       }}
     >
       <Box
+        id="box1"
         display="flex"
         flexDirection="row"
         justifyContent={"space-between"}
@@ -84,24 +86,28 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
         displayPrint={"none"}
       >
         <Box
+          id="box2"
           sx={{
-            display: "flex",
             alignItems: "center",
+            justifyContent: "flex-start",
+            minWidth: "80%",
           }}
         >
           <Box
+            id="box3"
             sx={{
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
               display: "inline-flex",
               alignItems: "center",
               width: "100%",
             }}
           >
-            <Box>
+            <Box id="box4">
               <IconButton onClick={() => navigate("/mealplans")} color="info">
                 <ArrowBackIosNewIcon />
               </IconButton>
-            </Box>
+            </Box>{" "}
+            {/*close box4 */}
             {isEditName ? (
               <TextField
                 id="filled-basic"
@@ -112,8 +118,6 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                   backgroundColor: theme.palette.primary.light,
                   width: "10rem",
                   maxWidth: "10rem",
-                  // padding: "0.5rem",
-                  // marginLeft: "1rem",
                 }}
                 defaultValue={data.nameEn}
                 onBlur={(e) => {
@@ -132,19 +136,13 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
               />
             ) : (
               <Typography
-                display="inline-flex"
-                justifyContent="space-between"
                 padding="0.5rem 0"
-                width="9rem"
-                maxWidth="9rem"
-                whiteSpace="nowrap"
                 overflow="hidden"
+                maxWidth={"60%"}
+                noWrap={true}
                 color="primary.contrastText"
                 variant={"h5"}
                 defaultValue={data.nameEn}
-                // onClick={(e) => {
-                //   setIsEditName(true);
-                // }}
                 onClick={(e) => {
                   setIsEditName(true);
                 }}
@@ -191,7 +189,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                     {...params}
                     label="Select user"
                     sx={{
-                      width: "10rem",
+                      width: "12rem",
                     }}
                     variant="filled"
                   />
@@ -199,16 +197,11 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
               ></Autocomplete>
             ) : (
               <Typography
-                display="inline-flex"
-                justifyContent="space-between"
                 padding="0.75rem 0"
                 color="primary.contrastText"
                 variant={"h5"}
-                textTransform={"capitalize"}
-                fontStyle="normal"
-                width="10rem"
-                maxWidth="9rem"
-                whiteSpace="nowrap"
+                width="12rem"
+                maxWidth="12rem"
                 onClick={(e) => {
                   if (!data.isTemplate) {
                     setIsEditUser(true);
@@ -222,22 +215,18 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                   : "No User Assigned"}
               </Typography>
             )}
-          </Box>
-          <Box
-            sx={{
-              ".css-10rztul-MuiInputBase-root-MuiOutlinedInput-root": {
-                borderRadius: "10px",
-              },
-            }}
-          >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               {!data.isTemplate ? (
                 <DatePicker
                   sx={{
-                    marginLeft: "20px",
+                    maxWidth: "12rem",
+                    marginLeft: "1rem",
+                    margin: "0 0.5rem",
+
                     ".css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
                       color: `${theme.palette.primary.contrastText}`,
-                      padding: "10px",
+                      // padding: "1rem 1rem",
+                      padding: "0.5rem",
                     },
                     ".css-i4bv87-MuiSvgIcon-root": {
                       color: `${theme.palette.primary.contrastText}`,
@@ -246,7 +235,7 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                       color: `${theme.palette.primary.contrastText}`,
                     },
                   }}
-                  format="DD-MMM-YYYY"
+                  format={startDate === "Invalid Date" ? "DD-MM-YYYY" : "DD-MMM-YYYY"}
                   value={dayjs(startDate)}
                   onChange={async (newDate: Dayjs | null) => {
                     if (newDate !== null) {
@@ -265,14 +254,16 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
                       );
                     }
                   }}
-                ></DatePicker>
+                />
               ) : (
                 <></>
               )}
             </LocalizationProvider>
-          </Box>
-        </Box>
-        <Box display="inline-flex">
+          </Box>{" "}
+          {/*close box3 */}
+        </Box>{" "}
+        {/*close box2 */}
+        <Box display="inline-flex" id="icons">
           <IconButton onClick={() => window.print()} sx={{ displayPrint: "none" }}>
             <Print htmlColor={`${theme.palette.primary.contrastText}`}></Print>
           </IconButton>
@@ -297,8 +288,10 @@ export const MealPlanHeader: React.FC<HeaderProps> = ({ mealPlan }) => {
               />
             )}
           </IconButton>
-        </Box>
-      </Box>
+        </Box>{" "}
+        {/*close icons */}
+      </Box>{" "}
+      {/*close box1 */}
       {editHeader ? (
         <Box
           style={{
