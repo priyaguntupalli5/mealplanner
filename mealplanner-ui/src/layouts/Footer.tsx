@@ -33,7 +33,7 @@ export function Footer() {
           </a>
         </Typography>
         <Box display= "flex" alignItems= "center" justifyContent="center">
-          <img src="/images/CivicTechLogo.png" alt="CivicTech" style={{ width: '15%', height: 'auto' }}/>
+          <img src="/images/CivicTechLogo.png" alt="CivicTechLogo" style={{ width: '12%', height: 'auto' }}/>
         </Box>
       </Container>
     </Box>
