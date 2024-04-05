@@ -131,15 +131,6 @@ export const Meal = () => {
       </span>
     ));
   };
-
-
-  useEffect(() => {
-    console.log(meal)
-  
-  }, [meal])
-  
-
-
   return (
     <>
       <Box
@@ -298,6 +289,44 @@ export const Meal = () => {
           </Grid>
           <Grid item xs={3}>
             <Typography variant="h6"> Ingredients </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                "#ingredientsTable tbody tr:nth-child(odd)": {
+                  backgroundColor: "#EEEEEE" /* Slightly darker gray for odd rows */,
+                },
+                "#ingredientsTable": {
+                  border: "1px solid #E0E0E0",
+                  padding: "0.3em",
+                },
+                "#ingredientsTable thead": {
+                  borderBottom: "1px solid black",
+                },
+              }}
+            >
+              <>
+                <table id="ingredientsTable" cellSpacing="0" cellPadding="0">
+                  <thead>
+                    <tr>
+                      <th style={{ textAlign: "left" }}>Name</th>
+                      <th style={{ textAlign: "center" }}>Qtt</th>
+                      <th style={{ textAlign: "center" }}>Unit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {meal?.ingredients?.nodes?.map((ingredient) => {
+                      return (
+                        <tr>
+                          <td style={{ textAlign: "left" }}>{ingredient.name}</td>
+                          <td style={{ textAlign: "center" }}>{ingredient.quantity}</td>
+                          <td style={{ textAlign: "center" }}>{ingredient.unit}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </>
+            </Typography>
           </Grid>
           <Grid item xs={9}>
             <Typography variant="h6"> Method of preparation </Typography>
