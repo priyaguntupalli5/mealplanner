@@ -19,6 +19,7 @@ export function Footer() {
         <Typography variant="body1" align="center">
           For Greener Village. By Civic Tech Fredericton.
         </Typography>
+          
         <Typography variant="body2" align="center">
           If you run into issues or have any suggestions or questions, please
           feel free to post your{" "}
@@ -31,6 +32,9 @@ export function Footer() {
             feedback
           </a>
         </Typography>
+        <Box display= "flex" alignItems= "center" justifyContent="center">
+          <img src="/images/CivicTechLogo.png" alt="CivicTech" style={{ width: '15%', height: 'auto' }}/>
+        </Box>
       </Container>
     </Box>
   );
