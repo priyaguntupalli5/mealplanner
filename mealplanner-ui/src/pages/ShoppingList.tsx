@@ -150,7 +150,7 @@ export const ShoppingList = () => {
               <TableRow>
                 <TableCell style={{ color: "#000" }}>Ingredient</TableCell>
                 <TableCell style={{ color: "#000" }}>Associated Meal</TableCell>
-                <TableCell style={{ color: "#000" }}>Quantity/Unit Per Meal</TableCell>
+                <TableCell style={{ color: "#000" }}>Quantity/Unit</TableCell>
                 <TableCell style={{ color: "#000" }}>Suggested Product</TableCell>
               </TableRow>
             </TableHead>
@@ -164,14 +164,15 @@ export const ShoppingList = () => {
                   <TableCell>
                     {Array.from(ingredientDetails.meals).map((meal, index) => (
                       <div key={index}>
-                        <li>{meal} {mealCounts.has(meal) && mealCounts.get(meal)! > 1 && ` x${mealCounts.get(meal)}`}</li>
+                        <li>{meal}</li>
                       </div>
                     ))}
                   </TableCell>
                   <TableCell>
                     {ingredientDetails.quantity.map((mealQuantities, index) => (
                       <div key={index}>
-                        <li>{mealQuantities} {ingredientDetails.unit[index]}</li>
+                        <li>{mealQuantities} {ingredientDetails.unit[index]} 
+                        {mealCounts.get(Array.from(ingredientDetails.meals)[index])! > 1 && ` x${mealCounts.get(Array.from(ingredientDetails.meals)[index])}`}</li>
                       </div>
                     ))}
                   </TableCell>
