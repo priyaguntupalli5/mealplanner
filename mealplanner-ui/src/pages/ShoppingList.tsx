@@ -94,17 +94,13 @@ export const ShoppingList = () => {
 
           if (mealsByIngredient.has(ingredientName)) {
             const existingIngredientDetails = mealsByIngredient.get(ingredientName)!;
-                
-            // Check if the meal already exists for this ingredient
             if (!existingIngredientDetails.meals.has(mealName)) {
-              existingIngredientDetails.quantity.push(quantity); // Push quantity for the ingredient
-              existingIngredientDetails.unit.push([unit]); // Push unit for the ingredient
+              existingIngredientDetails.quantity.push(quantity);
+              existingIngredientDetails.unit.push([unit]);
               
             }
-            // Add the meal to the set of meals for this ingredient
             existingIngredientDetails.meals.add(mealName);
                 
-            // Merge matched products with existing ones
             existingIngredientDetails.matchedProducts.push(
               ...matchedProducts.filter(
                 (product) => !existingIngredientDetails.matchedProducts.includes(product)
