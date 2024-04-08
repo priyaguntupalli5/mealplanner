@@ -166,7 +166,7 @@ export const CreateMealPlan = ({ connection, refetch }: { connection: string, re
               {planType === "mealPlan" && (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
-                    label="Starting Date"
+                    label="Start Date"
                     format="DD-MM-YYYY"
                     onChange={(newValue: Dayjs | null) => {
                     if (newValue !== null) {
