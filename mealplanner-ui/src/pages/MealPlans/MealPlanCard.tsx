@@ -1,6 +1,6 @@
 import React from "react";
 import { MealPlanNode } from "../../state/types";
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, IconButtonProps, ImageList, ImageListItem, Typography, styled, useTheme, useMediaQuery, Chip } from "@mui/material";
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, IconButtonProps, ImageList, ImageListItem, Typography, styled, useTheme, useMediaQuery, Chip, Tooltip } from "@mui/material";
 import { ShoppingCart, DeleteTwoTone, ContentCopy, ExpandMore, Favorite } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { getCurrentPerson } from "../../state/state";
@@ -111,7 +111,7 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                 </IconButton>
                 <IconButton
                   aria-label="delete"
-                  onClick = {handleClickOpen}
+                  onClick={handleClickOpen}
                   sx={{ "& :hover": { color: theme.palette.primary.main } }}
                 >
                   <DeleteTwoTone />
@@ -126,21 +126,19 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                   onClose={handleClose}
                   aria-labelledby="delete-dialog"
                 >
-                  <DialogTitle id="delete-dialog">
-                    {"Delete this meal plan?"}
-                  </DialogTitle>
+                  <DialogTitle id="delete-dialog">{"Delete this meal plan?"}</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
                       Are you sure you want to <b>delete</b> the meal plan <b>{mealplan.nameEn}</b>?
                     </DialogContentText>
                   </DialogContent>
-  
+
                   <DialogActions>
-                    <Button 
+                    <Button
                       onClick={handleDelete}
                       autoFocus
                       startIcon={<DeleteTwoTone />}
-                      color = "error"
+                      color="error"
                     >
                       Delete
                     </Button>
@@ -149,7 +147,8 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                     </Button>
                   </DialogActions>
                 </Dialog>
-                {getCurrentPerson().personRole === "app_admin" || getCurrentPerson().personRole === "app_meal_designer" ? (
+                {getCurrentPerson().personRole === "app_admin" ||
+                getCurrentPerson().personRole === "app_meal_designer" ? (
                   <IconButton
                     aria-label="duplicate"
                     onClick={(e) => {
@@ -160,7 +159,7 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                   >
                     <ContentCopy />
                   </IconButton>
-                ):null}
+                ) : null}
               </div>
             }
             title={mealplan.nameEn}
@@ -168,7 +167,9 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
           />
           {startDate && (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Chip label={"Starting: " + startDate.format("DD-MMM-YYYY")} />
+              <Tooltip title="Start Date">
+                <Chip label={startDate.format("DD-MMM-YYYY")} />
+              </Tooltip>
             </div>
           )}
           <ImageList sx={{ width: 350, height: 150 }} cols={3} rowHeight={164}>
@@ -195,13 +196,13 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-          <IconButton 
-            aria-label="add to favorites"
-            sx={{ "& :hover": { color: theme.palette.secondary.dark } }}
-          >
+            <IconButton
+              aria-label="add to favorites"
+              sx={{ "& :hover": { color: theme.palette.secondary.dark } }}
+            >
               <Favorite />
             </IconButton>
-  
+
             <ExpandMoreFn
               expand={expanded}
               onClick={handleExpandClick}
