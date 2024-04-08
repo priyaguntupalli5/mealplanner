@@ -6,6 +6,7 @@ import {
   ReferenceInput,
   SimpleForm,
   TextInput,
+  required,
   useGetOne,
 } from "react-admin";
 import { useParams } from "react-router-dom";
@@ -29,20 +30,22 @@ export const IngredientCreate = (props: CreateProps) => {
         sx={{
           display: "none",
         }}
-
+        validate={required()}
         />
         <NumberInput source="code" label="Ingredient Code" fullWidth min={1} /> 
-        <TextInput source="name" label="Ingredient Name" fullWidth />
-        <NumberInput source="quantity" fullWidth min={0} />
+        <TextInput source="name" label="Ingredient Name" fullWidth validate={required()}/>
+        <NumberInput source="quantity" fullWidth min={0} validate={required()}/>
         <TextInput
           source="unit"
           fullWidth
           helperText="Measure unit Eg: g, ml, cup, tsp"
+          validate={required()}
         />
         <TextInput
           source="productKeyword"
           fullWidth
           helperText="Search keyword for a buyer"
+          validate={required()}
         />
         <ReferenceInput source="substituteIngredientId" reference="ingredients">
           <AutocompleteInput
