@@ -60,47 +60,56 @@ export const ShoppingList = () => {
     { fetchPolicy: "store-or-network" }
   );
   const mealPlan = node.mealPlan;
+
+  interface Meal {
+    id: string;
+    name: string;
+  }
+
   interface MealIngredient {
-    meals: Set<string>;
+    mealsById: Meal[];
     quantity: any[][];
     unit: string[][];
     matchedProducts: string[];
   }
+  
   const mealsByIngredient: Map<string, MealIngredient> = new Map<string, MealIngredient>();
   const mealCounts = new Map<string, number>();
 
   mealPlan?.mealPlanEntries.nodes.forEach((mealPlanEntry) => {
+    const mealId = mealPlanEntry.meal?.id;
     const mealName = mealPlanEntry.meal?.nameEn;
 
-    if (mealName) {
-      if (mealCounts.has(mealName)) {
-          mealCounts.set(mealName, mealCounts.get(mealName)! + 1);
+    if (mealId) {
+      if (mealCounts.has(mealId)) {
+          mealCounts.set(mealId, mealCounts.get(mealId)! + 1);
       } else {
-          mealCounts.set(mealName, 1);
+          mealCounts.set(mealId, 1);
         }
     }
     if (mealPlanEntry.meal?.ingredients) {
       mealPlanEntry.meal.ingredients.nodes.forEach((ingredient) => {
-        let ingredientName = ingredient.name;
-        const productKeyword = ingredient.productKeyword;
-        const mealName = mealPlanEntry.meal?.nameEn;
+        let ingredientName = ingredient.name.toLowerCase();
+        const productKeyword = ingredient.productKeyword.toLowerCase();
         const quantity = ingredient.quantity;
         const unit = ingredient.unit;
         const matchedProducts = ingredient.matchedProducts.nodes.map(product => product.nameEn);
-        if (mealName) {
-          if (ingredientName.toLowerCase() !== productKeyword.toLowerCase()){
-            ingredientName = ingredientName + " | " + productKeyword;
+
+        if (mealId && mealName) {
+          if (ingredientName !== productKeyword){
+            ingredientName = `${ingredientName} | ${productKeyword}`;
           }
 
           if (mealsByIngredient.has(ingredientName)) {
             const existingIngredientDetails = mealsByIngredient.get(ingredientName)!;
-            if (!existingIngredientDetails.meals.has(mealName)) {
+            const mealExists = existingIngredientDetails.mealsById.some(meal => meal.id === mealId);
+
+            if (!mealExists) {
+              existingIngredientDetails.mealsById.push({ id: mealId, name: mealName });
               existingIngredientDetails.quantity.push(quantity);
               existingIngredientDetails.unit.push([unit]);
               
             }
-            existingIngredientDetails.meals.add(mealName);
-                
             existingIngredientDetails.matchedProducts.push(
               ...matchedProducts.filter(
                 (product) => !existingIngredientDetails.matchedProducts.includes(product)
@@ -110,7 +119,7 @@ export const ShoppingList = () => {
             mealsByIngredient.set(ingredientName, existingIngredientDetails);
           } else {
             mealsByIngredient.set(ingredientName, {
-              meals: new Set([mealName]),
+              mealsById: [{ id: mealId, name: mealName }],
               quantity: [quantity],
               unit: [[unit]],
               matchedProducts,
@@ -145,8 +154,7 @@ export const ShoppingList = () => {
             <TableHead>
               <TableRow>
                 <TableCell style={{ color: "#000" }}>Ingredient</TableCell>
-                <TableCell style={{ color: "#000" }}>Associated Meal</TableCell>
-                <TableCell style={{ color: "#000" }}>Quantity/Unit</TableCell>
+                <TableCell style={{ color: "#000" }}>Meal - Quantity/Unit</TableCell>
                 <TableCell style={{ color: "#000" }}>Suggested Product</TableCell>
               </TableRow>
             </TableHead>
@@ -158,17 +166,13 @@ export const ShoppingList = () => {
                     {ingredientName}
                   </TableCell>
                   <TableCell>
-                    {Array.from(ingredientDetails.meals).map((meal, index) => (
-                      <div key={index}>
-                        <li>{meal}</li>
-                      </div>
-                    ))}
-                  </TableCell>
-                  <TableCell>
                     {ingredientDetails.quantity.map((mealQuantities, index) => (
                       <div key={index}>
-                        <li>{mealQuantities} {ingredientDetails.unit[index]} 
-                        {mealCounts.get(Array.from(ingredientDetails.meals)[index])! > 1 && ` x${mealCounts.get(Array.from(ingredientDetails.meals)[index])}`}</li>
+                        <li>
+                          {ingredientDetails.mealsById[index].name} {' - '}
+                          {mealQuantities} {ingredientDetails.unit[index]} 
+                          {mealCounts.get(ingredientDetails.mealsById[index].id)! > 1 && ` x${mealCounts.get(ingredientDetails.mealsById[index].id)}`}
+                        </li>
                       </div>
                     ))}
                   </TableCell>
