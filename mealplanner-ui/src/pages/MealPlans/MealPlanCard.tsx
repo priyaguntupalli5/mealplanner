@@ -1,6 +1,6 @@
 import React from "react";
 import { MealPlanNode } from "../../state/types";
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, IconButtonProps, ImageList, ImageListItem, Typography, styled, useTheme, useMediaQuery } from "@mui/material";
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Collapse, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, IconButtonProps, ImageList, ImageListItem, Typography, styled, useTheme, useMediaQuery, Chip, Tooltip } from "@mui/material";
 import { ShoppingCart, DeleteTwoTone, ContentCopy, ExpandMore, Favorite } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { getCurrentPerson } from "../../state/state";
@@ -9,6 +9,7 @@ import { duplicateMealPlan } from "./DuplicateMealPlan";
 import { RefetchFnDynamic } from "react-relay";
 import { OperationType } from "relay-runtime";
 import { MealPlansQuery$data } from "./__generated__/MealPlansQuery.graphql";
+import dayjs, { Dayjs } from 'dayjs';
 
 interface MealPlanCardProps {
     mealplan: MealPlanNode;
@@ -43,11 +44,13 @@ const getInitials = (name: string) => {
     return initials;
   };
 
+
 export const MealPlanCard = (props: MealPlanCardProps) => {
     const [expanded, setExpanded] = React.useState(false);
     const [openDialog, setOpenDialog] = React.useState(false);
     const navigate = useNavigate();
     const mealplan = props.mealplan;
+    const startDate: Dayjs | null = mealplan.startDate ? dayjs(mealplan.startDate) : null;
     const connection = props.connection;
     const theme = useTheme();
     const fullScreenDialog = useMediaQuery(theme.breakpoints.down('md'));
@@ -108,7 +111,7 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                 </IconButton>
                 <IconButton
                   aria-label="delete"
-                  onClick = {handleClickOpen}
+                  onClick={handleClickOpen}
                   sx={{ "& :hover": { color: theme.palette.primary.main } }}
                 >
                   <DeleteTwoTone />
@@ -123,21 +126,19 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                   onClose={handleClose}
                   aria-labelledby="delete-dialog"
                 >
-                  <DialogTitle id="delete-dialog">
-                    {"Delete this meal plan?"}
-                  </DialogTitle>
+                  <DialogTitle id="delete-dialog">{"Delete this meal plan?"}</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
                       Are you sure you want to <b>delete</b> the meal plan <b>{mealplan.nameEn}</b>?
                     </DialogContentText>
                   </DialogContent>
-  
+
                   <DialogActions>
-                    <Button 
+                    <Button
                       onClick={handleDelete}
                       autoFocus
                       startIcon={<DeleteTwoTone />}
-                      color = "error"
+                      color="error"
                     >
                       Delete
                     </Button>
@@ -146,7 +147,8 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                     </Button>
                   </DialogActions>
                 </Dialog>
-                {getCurrentPerson().personRole === "app_admin" || getCurrentPerson().personRole === "app_meal_designer" ? (
+                {getCurrentPerson().personRole === "app_admin" ||
+                getCurrentPerson().personRole === "app_meal_designer" ? (
                   <IconButton
                     aria-label="duplicate"
                     onClick={(e) => {
@@ -157,12 +159,19 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
                   >
                     <ContentCopy />
                   </IconButton>
-                ):null}
+                ) : null}
               </div>
             }
             title={mealplan.nameEn}
             subheader={mealplan.person?.fullName}
           />
+          {startDate && (
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Tooltip title="Start Date">
+                <Chip label={startDate.format("DD-MMM-YYYY")} />
+              </Tooltip>
+            </div>
+          )}
           <ImageList sx={{ width: 350, height: 150 }} cols={3} rowHeight={164}>
             {mealplan.mealPlanEntries.nodes.map((meal) =>
               meal.meal?.photoUrl !== null ? (
@@ -187,13 +196,13 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-          <IconButton 
-            aria-label="add to favorites"
-            sx={{ "& :hover": { color: theme.palette.secondary.dark } }}
-          >
+            <IconButton
+              aria-label="add to favorites"
+              sx={{ "& :hover": { color: theme.palette.secondary.dark } }}
+            >
               <Favorite />
             </IconButton>
-  
+
             <ExpandMoreFn
               expand={expanded}
               onClick={handleExpandClick}
