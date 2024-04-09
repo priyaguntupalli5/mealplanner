@@ -15,6 +15,7 @@ import {
 import { ListField } from "../ListField";
 import { NutritionShow } from "../Nutrition/NutritionShow";
 import CustomSearchInput from "../components/CustomSearchInput";
+import { getSearchByString } from "../Products/service";
 
 export const ProductList = (props: ListProps) => {
   const [data, setData] = useState<string[]>([]);
@@ -25,7 +26,7 @@ export const ProductList = (props: ListProps) => {
 
   return (
     <>
-      <CustomSearchInput onSearch={handleSearchResult} />
+      <CustomSearchInput onSearch={handleSearchResult} getSearchByString={getSearchByString} />
       <List
         {...props}
         title="ProductList"
