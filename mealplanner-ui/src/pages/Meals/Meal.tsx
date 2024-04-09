@@ -309,7 +309,7 @@ export const Meal = () => {
                     <tr style={{backgroundColor: "#E8F5E9"}}>
                       <th style={{ textAlign: "left" }}>Ingredients</th>
                       <th style={{ textAlign: "center" }}>Qtt</th>
-                      <th style={{ textAlign: "center" }}>Unit</th>
+                      <th style={{ textAlign: "center", paddingLeft: "10px" }}>Unit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -318,7 +318,7 @@ export const Meal = () => {
                         <tr>
                           <td style={{ textAlign: "left" }}>{ingredient.name}</td>
                           <td style={{ textAlign: "center" }}>{ingredient.quantity}</td>
-                          <td style={{ textAlign: "center" }}>{ingredient.unit}</td>
+                          <td style={{ textAlign: "center", paddingLeft: "10px" }}>{ingredient.unit}</td>
                         </tr>
                       );
                     })}
