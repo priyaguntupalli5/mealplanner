@@ -163,7 +163,7 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
               </div>
             }
             title={mealplan.nameEn}
-            subheader={mealplan.person?.fullName == null? "No User Assigned": mealplan.person?.fullName}
+            subheader={!mealplan.isTemplate && mealplan.person?.fullName == null? "No User Assigned": mealplan.person?.fullName}
           />
           {startDate && (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
