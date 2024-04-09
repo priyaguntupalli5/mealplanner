@@ -12,6 +12,7 @@ import {
 import { ListField } from "../ListField";
 import CustomSearchInput from "../components/CustomSearchInput";
 import { Details, VideoField } from "./MealDetails";
+import { getSearchByString } from "../Meals/service";
 
 export const MealList = (props: ListProps) => {
   const [data, setData] = useState<string[]>([]);
@@ -21,7 +22,7 @@ export const MealList = (props: ListProps) => {
 
   return (
     <>
-      <CustomSearchInput onSearch={handleSearchResult} />
+      <CustomSearchInput onSearch={handleSearchResult} getSearchByString={getSearchByString} />
       <List
         {...props}
         title="Meals List"
