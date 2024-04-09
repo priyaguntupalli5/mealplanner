@@ -82,13 +82,17 @@ const mealQuery = graphql`
         vitD
         vitE
         vitK
-
       }
       ingredients {
         nodes {
           name
           quantity
           unit
+          substituteIngredient {
+            name
+            quantity
+            unit
+          }
         }
       }
     }
@@ -170,36 +174,28 @@ export const Meal = () => {
           </Typography>
         </Paper>
         <Tooltip title={nutritionData}>
-        <Paper
-          sx={{
-            textAlign: "center",
-            width: "160px",
-            opacity: "0.7",
-            position: "absolute",
-            right: 50,
-            top: 250,
-            backgroundColor: "black",
-          }}
-        >
-          <Typography variant="caption" color="whitesmoke">
-            Nutrition rating
-          </Typography>
-          <Rating
-            name="read-only"
-            value={
-              meal?.nutritionRating === undefined ? null : meal?.nutritionRating
-            }
-            readOnly
-          />
-        </Paper>
+          <Paper
+            sx={{
+              textAlign: "center",
+              width: "160px",
+              opacity: "0.7",
+              position: "absolute",
+              right: 50,
+              top: 250,
+              backgroundColor: "black",
+            }}
+          >
+            <Typography variant="caption" color="whitesmoke">
+              Nutrition rating
+            </Typography>
+            <Rating
+              name="read-only"
+              value={meal?.nutritionRating === undefined ? null : meal?.nutritionRating}
+              readOnly
+            />
+          </Paper>
         </Tooltip>
-        <Typography
-          variant="body1"
-          lineHeight="2rem"
-          position="absolute"
-          top="300px"
-          left="50px"
-        >
+        <Typography variant="body1" lineHeight="2rem" position="absolute" top="300px" left="50px">
           {displayTags()}
         </Typography>
       </Box>
@@ -254,24 +250,17 @@ export const Meal = () => {
                 </span>
               ))}
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{ display: "none", displayPrint: "block" }}
-            >
+            <Typography variant="body1" sx={{ display: "none", displayPrint: "block" }}>
               {displayTags()}
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{ display: "none", displayPrint: "block" }}
-            >
-              Estimated Price: {displayCost()} Nutrition Rating:{" "}
-              {meal?.nutritionRating}
+            <Typography variant="body1" sx={{ display: "none", displayPrint: "block" }}>
+              Estimated Price: {displayCost()} Nutrition Rating: {meal?.nutritionRating}
             </Typography>
             <Typography variant="caption">
-              Meal Code: {meal?.code} &nbsp; Prep Time:{" "} {meal?.prepTime} mins &nbsp; 
-              Cook Time:{" "} {meal?.cookTime} mins &nbsp; Portions: {meal?.portions} &nbsp;
-              Serving Size: {meal?.servingsSize} {meal?.servingsSizeUnit} &nbsp;
-              Serving Cost: {meal?.servingCost}$
+              Meal Code: {meal?.code} &nbsp; Prep Time: {meal?.prepTime} mins &nbsp; Cook Time:{" "}
+              {meal?.cookTime} mins &nbsp; Portions: {meal?.portions} &nbsp; Serving Size:{" "}
+              {meal?.servingsSize} {meal?.servingsSizeUnit} &nbsp; Serving Cost: {meal?.servingCost}
+              $
             </Typography>
 
             {/* Explicitly indicate meal description is not available*/}
@@ -281,9 +270,7 @@ export const Meal = () => {
                 {meal.descriptionEn}{" "}
               </Typography>
             ) : (
-              <Typography color="gray">
-                No meal description available
-              </Typography>
+              <Typography color="gray">No meal description available</Typography>
             )}
             <Typography paddingBottom="1em">{meal?.descriptionFr}</Typography>
           </Grid>
@@ -306,7 +293,7 @@ export const Meal = () => {
               <>
                 <table id="ingredientsTable" cellSpacing="0" cellPadding="0">
                   <thead>
-                    <tr style={{backgroundColor: "#E8F5E9"}}>
+                    <tr style={{ backgroundColor: "#E8F5E9" }}>
                       <th style={{ textAlign: "left" }}>Ingredients</th>
                       <th style={{ textAlign: "center" }}>Qtt</th>
                       <th style={{ textAlign: "center", paddingLeft: "10px" }}>Unit</th>
@@ -316,9 +303,16 @@ export const Meal = () => {
                     {meal?.ingredients?.nodes?.map((ingredient) => {
                       return (
                         <tr>
-                          <td style={{ textAlign: "left" }}>{ingredient.name}</td>
+                          <td style={{ textAlign: "left" }}>
+                            {ingredient.name}
+                              <br />
+                            {false && (
+                              ingredient.name
+                            )}
+                          </td>
                           <td style={{ textAlign: "center" }}>{ingredient.quantity}</td>
-                          <td style={{ textAlign: "center", paddingLeft: "10px" }}>{ingredient.unit}</td>
+                          <td style={{ textAlign: "center", paddingLeft: "10px" }}> {ingredient.unit}
+                          </td>
                         </tr>
                       );
                     })}
