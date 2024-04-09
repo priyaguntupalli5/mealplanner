@@ -31,6 +31,9 @@ export function Footer() {
             feedback
           </a>
         </Typography>
+        <Box display= "flex" alignItems= "center" justifyContent="center">
+          <img src="/images/CivicTechLogo.png" alt="CivicTechLogo" style={{ width: '12%', height: 'auto', marginTop: '10px' }}/>
+        </Box>
       </Container>
     </Box>
   );
