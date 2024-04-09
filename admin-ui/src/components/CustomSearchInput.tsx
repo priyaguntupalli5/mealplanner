@@ -14,7 +14,6 @@ const CustomSearchInput = ({ onSearch, getSearchByString}: CustomSearchInputProp
   useEffect(() => {
     getSearchByString(client, searchString)
       .then((idsArray: string[]) => {
-        console.log(idsArray);
         onSearch(idsArray);
       })
       .catch((err) => {
