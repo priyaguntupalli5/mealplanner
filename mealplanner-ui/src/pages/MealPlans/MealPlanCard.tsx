@@ -34,10 +34,8 @@ interface MealPlanCardProps {
   
 const getInitials = (name: string) => {
     let initials = "";
-    let names: string[] = (name && name.length > 1 && name.split(" ")) || [
-      "No",
-      "Name",
-    ];
+
+    let names: string[] = (name && name.length > 1 && name.split(" ")) || [];
     names.forEach((n) => {
       initials += n[0];
     });
@@ -92,9 +90,11 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
         >
           <CardHeader
             avatar={
-              <Avatar sx={{ bgcolor: "green", width: "fit" }} aria-label="user">
-                {getInitials(mealplan.person?.fullName || "")}
+              <Tooltip title={mealplan.isTemplate ? "Template" : ""}>
+              <Avatar sx={{ bgcolor: mealplan.isTemplate? "grey":"green", width: "fit" }} aria-label="user">
+                {mealplan.isTemplate ? "T" : getInitials(mealplan.person?.fullName || "")}
               </Avatar>
+              </Tooltip>
             }
             action={
               <div>
@@ -163,7 +163,7 @@ export const MealPlanCard = (props: MealPlanCardProps) => {
               </div>
             }
             title={mealplan.nameEn}
-            subheader={mealplan.person?.fullName}
+            subheader={!mealplan.isTemplate && mealplan.person?.fullName == null? "No User Assigned": mealplan.person?.fullName}
           />
           {startDate && (
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
