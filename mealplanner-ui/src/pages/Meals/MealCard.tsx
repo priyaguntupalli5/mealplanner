@@ -11,6 +11,7 @@ import {
   IconButton,
   IconButtonProps,
   styled,
+  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -113,16 +114,18 @@ export const MealCard = (props: MealProps) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton
-            aria-label="toggle favorite"
-            sx={{ color: theme.palette.secondary.dark }}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleToggleFavorite(meal.rowId);
-            }}
-          >
-            {isFavorite ? <Favorite /> : <FavoriteBorder />}
-          </IconButton>
+          <Tooltip title="Toggle Favorite" placement="right">
+            <IconButton
+              aria-label="toggle favorite"
+              sx={{ color: theme.palette.secondary.dark }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleFavorite(meal.rowId);
+              }}
+            >
+              {isFavorite ? <Favorite /> : <FavoriteBorder />}
+            </IconButton>
+          </Tooltip>
           <ExpandMoreFn
             expand={expanded}
             onClick={handleExpandClick}
