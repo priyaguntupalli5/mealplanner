@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e116a91719e25bab89f8f1cca6f2cc61>>
+ * @generated SignedSource<<f4558d0e8e687053c26b6b6c73ebbbab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,10 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CategoryT = "BREAKFAST" | "LUNCH" | "DINNER" | "SNACK" | "%future added value";
-export type MealsQuery$variables = {};
-export type MealsQuery$data = {
+export type MealsDataQuery$variables = {
+  slug: string;
+};
+export type MealsDataQuery$data = {
   readonly meals: {
     readonly nodes: ReadonlyArray<{
       readonly rowId: any;
@@ -30,15 +32,22 @@ export type MealsQuery$data = {
   readonly gqLocalState: {
     readonly selectedMealTags: ReadonlyArray<string> | null;
   };
-  readonly " $fragmentSpreads": FragmentRefs<"MealTags_tags">;
+  readonly " $fragmentSpreads": FragmentRefs<"MealTags_tags" | "PersonFavoriteMeals_favorites">;
 };
-export type MealsQuery = {
-  variables: MealsQuery$variables;
-  response: MealsQuery$data;
+export type MealsDataQuery = {
+  variables: MealsDataQuery$variables;
+  response: MealsDataQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "slug"
+  }
+],
+v1 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -52,77 +61,77 @@ var v0 = [
     ]
   }
 ],
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "rowId",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "nameEn",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "nameFr",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "descriptionEn",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "descriptionFr",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "categories",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "tags",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "code",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "photoUrl",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "videoUrl",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "kind": "ClientExtension",
   "selections": [
     {
@@ -144,17 +153,37 @@ v11 = {
       "storageKey": null
     }
   ]
-};
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v14 = [
+  (v2/*: any*/),
+  (v3/*: any*/),
+  (v4/*: any*/),
+  (v5/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/),
+  (v8/*: any*/),
+  (v9/*: any*/),
+  (v10/*: any*/),
+  (v11/*: any*/),
+  (v13/*: any*/)
+];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "MealsQuery",
+    "name": "MealsDataQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "MealsConnection",
         "kind": "LinkedField",
         "name": "meals",
@@ -168,7 +197,6 @@ return {
             "name": "nodes",
             "plural": true,
             "selections": [
-              (v1/*: any*/),
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
@@ -177,7 +205,8 @@ return {
               (v7/*: any*/),
               (v8/*: any*/),
               (v9/*: any*/),
-              (v10/*: any*/)
+              (v10/*: any*/),
+              (v11/*: any*/)
             ],
             "storageKey": null
           }
@@ -189,20 +218,31 @@ return {
         "kind": "FragmentSpread",
         "name": "MealTags_tags"
       },
-      (v11/*: any*/)
+      {
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "slug",
+            "variableName": "slug"
+          }
+        ],
+        "kind": "FragmentSpread",
+        "name": "PersonFavoriteMeals_favorites"
+      },
+      (v12/*: any*/)
     ],
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "MealsQuery",
+    "name": "MealsDataQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "MealsConnection",
         "kind": "LinkedField",
         "name": "meals",
@@ -215,25 +255,7 @@ return {
             "kind": "LinkedField",
             "name": "nodes",
             "plural": true,
-            "selections": [
-              (v1/*: any*/),
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/),
-              (v8/*: any*/),
-              (v9/*: any*/),
-              (v10/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              }
-            ],
+            "selections": (v14/*: any*/),
             "storageKey": null
           }
         ],
@@ -274,20 +296,99 @@ return {
         ],
         "storageKey": "allMealTags(first:100)"
       },
-      (v11/*: any*/)
+      (v12/*: any*/),
+      {
+        "alias": null,
+        "args": [
+          {
+            "fields": [
+              {
+                "fields": [
+                  {
+                    "kind": "Variable",
+                    "name": "equalTo",
+                    "variableName": "slug"
+                  }
+                ],
+                "kind": "ObjectValue",
+                "name": "slug"
+              }
+            ],
+            "kind": "ObjectValue",
+            "name": "filter"
+          },
+          {
+            "kind": "Literal",
+            "name": "first",
+            "value": 1
+          }
+        ],
+        "concreteType": "PeopleConnection",
+        "kind": "LinkedField",
+        "name": "people",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Person",
+            "kind": "LinkedField",
+            "name": "nodes",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FavoriteMealsConnection",
+                "kind": "LinkedField",
+                "name": "favoriteMeals",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "FavoriteMeal",
+                    "kind": "LinkedField",
+                    "name": "nodes",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Meal",
+                        "kind": "LinkedField",
+                        "name": "meal",
+                        "plural": false,
+                        "selections": (v14/*: any*/),
+                        "storageKey": null
+                      },
+                      (v13/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              (v13/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
     ]
   },
   "params": {
-    "cacheID": "b149ff8b3d1086e08138a1a3d52387d5",
+    "cacheID": "9c2e5e4ae6a1812702a90da536ae25e8",
     "id": null,
     "metadata": {},
-    "name": "MealsQuery",
+    "name": "MealsDataQuery",
     "operationKind": "query",
-    "text": "query MealsQuery {\n  meals(orderBy: [ID_DESC], first: 1000) {\n    nodes {\n      rowId\n      nameEn\n      nameFr\n      descriptionEn\n      descriptionFr\n      categories\n      tags\n      code\n      photoUrl\n      videoUrl\n      id\n    }\n  }\n  ...MealTags_tags\n}\n\nfragment MealTags_tags on Query {\n  allMealTags(first: 100) {\n    edges {\n      node\n    }\n  }\n}\n"
+    "text": "query MealsDataQuery(\n  $slug: String!\n) {\n  meals(orderBy: [ID_DESC], first: 1000) {\n    nodes {\n      rowId\n      nameEn\n      nameFr\n      descriptionEn\n      descriptionFr\n      categories\n      tags\n      code\n      photoUrl\n      videoUrl\n      id\n    }\n  }\n  ...MealTags_tags\n  ...PersonFavoriteMeals_favorites_20J5Pl\n}\n\nfragment MealTags_tags on Query {\n  allMealTags(first: 100) {\n    edges {\n      node\n    }\n  }\n}\n\nfragment PersonFavoriteMeals_favorites_20J5Pl on Query {\n  people(filter: {slug: {equalTo: $slug}}, first: 1) {\n    nodes {\n      favoriteMeals {\n        nodes {\n          meal {\n            rowId\n            nameEn\n            nameFr\n            descriptionEn\n            descriptionFr\n            categories\n            tags\n            code\n            photoUrl\n            videoUrl\n            id\n          }\n          id\n        }\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "53d8f93b61dc92a420009b86c5baff5a";
+(node as any).hash = "56973fe44e993fe41d3be5175d288048";
 
 export default node;

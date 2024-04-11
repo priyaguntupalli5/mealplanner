@@ -1,22 +1,21 @@
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { graphql } from "babel-plugin-relay/macro";
-import { useLazyLoadQuery } from "react-relay";
 import React from "react";
-import { Grid } from "@mui/material";
+import { useLazyLoadQuery, useRefetchableFragment } from "react-relay";
+import { useNavigate, useParams } from "react-router-dom";
 import { MealCard } from "./MealCard";
-import { useParams } from "react-router-dom";
-import { PersonFavoriteMealsQuery } from "./__generated__/PersonFavoriteMealsQuery.graphql";
+import { PersonFavoriteMealsPageQuery } from "./__generated__/PersonFavoriteMealsPageQuery.graphql";
+import { PersonFavoriteMeals_favorites$key } from "./__generated__/PersonFavoriteMeals_favorites.graphql";
 
-const favoriteMealsQuery = graphql`
-  query PersonFavoriteMealsQuery($slug: String!){
-  people (
-    filter: {slug: {equalTo: $slug}}, 
-    first: 1
-  ) 
-  {
-    nodes {
-      favoriteMeals {
-        nodes {
-          meal {
+export const FavoriteMealsFragment = graphql`
+  fragment PersonFavoriteMeals_favorites on Query
+  @argumentDefinitions(slug: { type: "String!" })
+  @refetchable(queryName: "PersonFavoriteMealsRefetchQuery") {
+    people(filter: { slug: { equalTo: $slug } }, first: 1) {
+      nodes {
+        favoriteMeals {
+          nodes {
+            meal {
               rowId
               nameEn
               nameFr
@@ -27,29 +26,77 @@ const favoriteMealsQuery = graphql`
               code
               photoUrl
               videoUrl
+            }
           }
         }
       }
     }
   }
-}
 `;
 
-export const FavoriteMeals = () => {
+const personFavoriteMealsPageQuery = graphql`
+  query PersonFavoriteMealsPageQuery($slug: String!) {
+    people(filter: { slug: { equalTo: $slug } }, first: 1) {
+      nodes {
+        fullName
+      }
+    }
+    ...PersonFavoriteMeals_favorites @arguments(slug: $slug)
+  }
+`;
+
+export const FavoriteMealPage = () => {
   const params = useParams();
-  let favMealsData = useLazyLoadQuery<PersonFavoriteMealsQuery>(
-    favoriteMealsQuery,
-    {slug: params.slug as string},
-    {fetchPolicy: "store-and-network"}
-    )
- const favMeals = favMealsData.people?.nodes[0].favoriteMeals.nodes;
- favMeals?.map(favMeal => {
-  console.log('fav Meals', favMeal.meal);
- })
-  
+  const slug = params.slug!;
+  const navigate = useNavigate();
+  const data = useLazyLoadQuery<PersonFavoriteMealsPageQuery>(
+    personFavoriteMealsPageQuery,
+    { slug: slug },
+    { fetchPolicy: "store-or-network" }
+  );
+  if (data && data.people?.nodes.length === 0) {
+    return <h3>Person not found</h3>;
+  }
+  return (
+    <>
+      <Stack
+        direction={"row"}
+        margin="2em 5em"
+        justifyContent={"space-between"}
+      >
+        <Typography variant="h4">
+          Favorite meals of {data.people?.nodes[0].fullName}{" "}
+        </Typography>
+        <Button
+          variant="outlined"
+          sx={{ marginRight: "3em" }}
+          onClick={() => {
+            navigate("/meals");
+          }}
+        >
+          Back to Meals
+        </Button>
+      </Stack>
+
+      <FavoriteMeals favs={data} />
+    </>
+  );
+};
+
+export const FavoriteMeals = ({
+  favs,
+}: {
+  favs: PersonFavoriteMeals_favorites$key;
+}) => {
+  const [meals, refetch] = useRefetchableFragment(FavoriteMealsFragment, favs);
+
+  const favMeals = meals.people?.nodes[0].favoriteMeals.nodes;
+  const selectedFavs: string[] =
+    favMeals?.map((favMeal) => favMeal.meal?.rowId) || [];
+
   return (
     <React.Fragment>
-      { favMeals ? (
+      {favMeals && favMeals.length > 0 ? (
         <Grid
           container
           spacing={2}
@@ -59,12 +106,18 @@ export const FavoriteMeals = () => {
         >
           {favMeals.map((favMeal) => {
             if (favMeal.meal?.nameEn.toLowerCase())
-              return <MealCard node={favMeal.meal} />;
+              return (
+                <MealCard
+                  node={favMeal.meal}
+                  refetch={refetch}
+                  selectedFavs={selectedFavs}
+                />
+              );
           })}
         </Grid>
       ) : (
-        "No meals"
+        <h3 style={{ textAlign: "center" }}>There are no favorite meals </h3>
       )}
     </React.Fragment>
-  )
-}
+  );
+};
