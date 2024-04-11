@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f546e3e6ed23ed96b88dd796dabf83e9>>
+ * @generated SignedSource<<56fe090cba3e6a478f7473a6fd37735c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -81,9 +81,19 @@ export type MealQuery$data = {
     } | null;
     readonly ingredients: {
       readonly nodes: ReadonlyArray<{
+        readonly rowId: any;
+        readonly id: string;
         readonly name: string;
         readonly quantity: any;
         readonly unit: string;
+        readonly substituteIngredientId: any | null;
+        readonly substituteIngredient: {
+          readonly id: string;
+          readonly name: string;
+          readonly quantity: any;
+          readonly unit: string;
+          readonly substituteReason: ReadonlyArray<string | null> | null;
+        } | null;
       }>;
     };
   } | null;
@@ -546,28 +556,84 @@ v64 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
 },
 v65 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "quantity",
+  "name": "name",
   "storageKey": null
 },
 v66 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "unit",
+  "name": "quantity",
   "storageKey": null
 },
 v67 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "unit",
+  "storageKey": null
+},
+v68 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "IngredientsConnection",
+  "kind": "LinkedField",
+  "name": "ingredients",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Ingredient",
+      "kind": "LinkedField",
+      "name": "nodes",
+      "plural": true,
+      "selections": [
+        (v2/*: any*/),
+        (v64/*: any*/),
+        (v65/*: any*/),
+        (v66/*: any*/),
+        (v67/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "substituteIngredientId",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Ingredient",
+          "kind": "LinkedField",
+          "name": "substituteIngredient",
+          "plural": false,
+          "selections": [
+            (v64/*: any*/),
+            (v65/*: any*/),
+            (v66/*: any*/),
+            (v67/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "substituteReason",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 };
 return {
@@ -658,31 +724,7 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "IngredientsConnection",
-            "kind": "LinkedField",
-            "name": "ingredients",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Ingredient",
-                "kind": "LinkedField",
-                "name": "nodes",
-                "plural": true,
-                "selections": [
-                  (v64/*: any*/),
-                  (v65/*: any*/),
-                  (v66/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
+          (v68/*: any*/)
         ],
         "storageKey": null
       }
@@ -774,53 +816,28 @@ return {
               (v61/*: any*/),
               (v62/*: any*/),
               (v63/*: any*/),
-              (v67/*: any*/)
+              (v64/*: any*/)
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "IngredientsConnection",
-            "kind": "LinkedField",
-            "name": "ingredients",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Ingredient",
-                "kind": "LinkedField",
-                "name": "nodes",
-                "plural": true,
-                "selections": [
-                  (v64/*: any*/),
-                  (v65/*: any*/),
-                  (v66/*: any*/),
-                  (v67/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v67/*: any*/)
+          (v68/*: any*/),
+          (v64/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e6d69d42ba9aa33cd41b420c4543e581",
+    "cacheID": "4ec8df3759f24522c28d1d2a161b9e2e",
     "id": null,
     "metadata": {},
     "name": "MealQuery",
     "operationKind": "query",
-    "text": "query MealQuery(\n  $mealId: BigInt!\n) {\n  meal(rowId: $mealId) {\n    rowId\n    code\n    nameEn\n    nameFr\n    tags\n    descriptionEn\n    descriptionFr\n    categories\n    photoUrl\n    videoUrl\n    method\n    totalCost\n    servingCost\n    tips\n    servingsSize\n    servingsSizeUnit\n    prepTime\n    cookTime\n    portions\n    nutritionRating\n    nutrition {\n      calcium\n      calories\n      carbohydrate\n      carbohydratePercent\n      carbohydrateUnit\n      cholesterol\n      cholesterolPercent\n      cholesterolUnit\n      dietaryFiber\n      dietaryFiberPercent\n      dietaryFiberUnit\n      iron\n      potassium\n      protein\n      proteinPercent\n      proteinUnit\n      saturatedFat\n      saturatedFatPercent\n      saturatedFatUnit\n      servingSize\n      servingSizeText\n      servingSizeUnit\n      servingsPerContainer\n      sodium\n      sodiumPercent\n      sodiumUnit\n      totalFatPercent\n      totalFat\n      totalFatUnit\n      totalSugar\n      totalSugarPercent\n      totalSugarUnit\n      transFat\n      transFatPercent\n      transFatUnit\n      vitA\n      vitB12\n      vitB6\n      vitC\n      vitD\n      vitE\n      vitK\n      id\n    }\n    ingredients {\n      nodes {\n        name\n        quantity\n        unit\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query MealQuery(\n  $mealId: BigInt!\n) {\n  meal(rowId: $mealId) {\n    rowId\n    code\n    nameEn\n    nameFr\n    tags\n    descriptionEn\n    descriptionFr\n    categories\n    photoUrl\n    videoUrl\n    method\n    totalCost\n    servingCost\n    tips\n    servingsSize\n    servingsSizeUnit\n    prepTime\n    cookTime\n    portions\n    nutritionRating\n    nutrition {\n      calcium\n      calories\n      carbohydrate\n      carbohydratePercent\n      carbohydrateUnit\n      cholesterol\n      cholesterolPercent\n      cholesterolUnit\n      dietaryFiber\n      dietaryFiberPercent\n      dietaryFiberUnit\n      iron\n      potassium\n      protein\n      proteinPercent\n      proteinUnit\n      saturatedFat\n      saturatedFatPercent\n      saturatedFatUnit\n      servingSize\n      servingSizeText\n      servingSizeUnit\n      servingsPerContainer\n      sodium\n      sodiumPercent\n      sodiumUnit\n      totalFatPercent\n      totalFat\n      totalFatUnit\n      totalSugar\n      totalSugarPercent\n      totalSugarUnit\n      transFat\n      transFatPercent\n      transFatUnit\n      vitA\n      vitB12\n      vitB6\n      vitC\n      vitD\n      vitE\n      vitK\n      id\n    }\n    ingredients {\n      nodes {\n        rowId\n        id\n        name\n        quantity\n        unit\n        substituteIngredientId\n        substituteIngredient {\n          id\n          name\n          quantity\n          unit\n          substituteReason\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c4cbc91a35d3e4931a71f82da60ddb2e";
+(node as any).hash = "a2d9e8438e53b421190f512a3d6ccee6";
 
 export default node;

@@ -85,9 +85,19 @@ const mealQuery = graphql`
       }
       ingredients {
         nodes {
+          rowId
+          id
           name
           quantity
           unit
+          substituteIngredientId
+          substituteIngredient {
+            id
+            name
+            quantity
+            unit
+            substituteReason
+          }
         }
       }
     }
@@ -107,6 +117,15 @@ export const Meal = () => {
   const nutritionData = data
   ? Object.entries(data).filter(([key, value]) => value !== null).map(([key, value]) => <React.Fragment>{key}: {value}<br /></React.Fragment>)
   : 'No data';
+
+  const arrayOfSubstituteIngredientsIds = meal?.ingredients?.nodes
+    ?.filter((item) => item?.substituteIngredientId)
+    .map((item) => item?.substituteIngredientId);
+
+  const arrayOfIngredientsWithoutSubstituteIngredients = meal?.ingredients?.nodes?.filter(
+    (item) => !arrayOfSubstituteIngredientsIds?.includes(item.rowId) 
+  );
+  
   
   const theme = useTheme();
   const tagStyle = {
@@ -133,6 +152,8 @@ export const Meal = () => {
   };
   useEffect(() => {
     console.log(meal)
+    console.log(arrayOfSubstituteIngredientsIds)
+    console.log(arrayOfIngredientsWithoutSubstituteIngredients)
   }, [meal])
   return (
     <>
@@ -277,7 +298,7 @@ export const Meal = () => {
             <Typography
               variant="body1"
               sx={{
-                "#ingredientsTable tbody tr:nth-child(even)": {
+                "#ingredientsTable tbody tr:nth-of-type(even)": {
                   backgroundColor: "#E8F5E9" /* Slightly darker gray for odd rows */,
                 },
                 "#ingredientsTable": {
@@ -299,19 +320,44 @@ export const Meal = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {meal?.ingredients?.nodes?.map((ingredient) => {
+                    {arrayOfIngredientsWithoutSubstituteIngredients?.map((ingredient) => {
                       return (
-                        <tr>
-                          <td style={{ textAlign: "left" }}>
+                        <tr key={ingredient.id}>
+                          <td>
                             {ingredient.name}
-                              {/* <br />
-                            {false && (
-                              ingredient.name
-                            )} */}
+                            {ingredient.substituteIngredient ? (
+                              <>
+                                {" "}
+                                <br />
+                                Substitute: {ingredient.substituteIngredient.name} <br />
+                                Reason: {ingredient.substituteIngredient.substituteReason}
+                              </>
+                            ) : (
+                              <></>
+                            )}
                           </td>
-                          <td style={{ textAlign: "center" }}>{ingredient.quantity}</td>
-                          <td style={{ textAlign: "center", paddingLeft: "10px" }}> {ingredient.unit}
+                          <td>
+                            {ingredient.quantity}
+                            {ingredient.substituteIngredient ? (
+                              <>
+                                {" "}
+                                <br /> {ingredient.substituteIngredient.quantity}{" "}
+                              </>
+                            ) : (
+                              <></>
+                            )}
                           </td>
+                          <td>
+                            {ingredient.unit}
+                            {ingredient.substituteIngredient ? (
+                              <>
+                                <br /> {ingredient.substituteIngredient.unit}{" "}
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </td>
+                          <td></td>
                         </tr>
                       );
                     })}
