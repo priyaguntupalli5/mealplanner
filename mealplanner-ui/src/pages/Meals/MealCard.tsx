@@ -115,6 +115,7 @@ export const MealCard = (props: MealProps) => {
         <CardActions disableSpacing>
           <IconButton
             aria-label="toggle favorite"
+            sx={{ color: theme.palette.secondary.dark }}
             onClick={(e) => {
               e.stopPropagation();
               handleToggleFavorite(meal.rowId);
