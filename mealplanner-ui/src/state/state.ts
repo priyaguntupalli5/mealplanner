@@ -4,25 +4,28 @@ import environment from "../relay/environment";
 import { SearchedMeal } from "./types";
 import {
   CategoryT,
-  state_createMealPlanEntryMutation
+  state_createMealPlanEntryMutation,
 } from "./__generated__/state_createMealPlanEntryMutation.graphql";
 import {
   state_createMealPlanMutation,
-  state_createMealPlanMutation$variables
+  state_createMealPlanMutation$variables,
 } from "./__generated__/state_createMealPlanMutation.graphql";
 import {
   state_CurrentUserQuery,
-  state_CurrentUserQuery$data
+  state_CurrentUserQuery$data,
 } from "./__generated__/state_CurrentUserQuery.graphql";
 import { state_deleteMealPlanEntryMutation } from "./__generated__/state_deleteMealPlanEntryMutation.graphql";
-import { state_loginMutation, state_loginMutation$data } from "./__generated__/state_loginMutation.graphql";
+import {
+  state_loginMutation,
+  state_loginMutation$data,
+} from "./__generated__/state_loginMutation.graphql";
 import {
   state_logoutMutation,
-  state_logoutMutation$data
+  state_logoutMutation$data,
 } from "./__generated__/state_logoutMutation.graphql";
 import {
   state_updateMealPlanMutation,
-  state_updateMealPlanMutation$variables
+  state_updateMealPlanMutation$variables,
 } from "./__generated__/state_updateMealPlanMutation.graphql";
 import { state_peopleQuery } from "./__generated__/state_peopleQuery.graphql";
 import { useLazyLoadQuery } from "react-relay";
@@ -45,22 +48,15 @@ export const setSelectedMealPlanTags = (mpTags: string[]) => {
   commitLocalUpdate(environment, (store) => {
     const localState = store.get(STATE_ID);
     localState?.setValue(mpTags, "selectedMealPlanTags");
-  })
-}
+  });
+};
 
 export const setSelectedMealTags = (mealTags: string[]) => {
   commitLocalUpdate(environment, (store) => {
     const localState = store.get(STATE_ID);
     localState?.setValue(mealTags, "selectedMealTags");
-  })
-}
-
-export const setSelectedFavMeals = (mealTags: string[]) => {
-  commitLocalUpdate(environment, (store) => {
-    const localState = store.get(STATE_ID);
-    localState?.setValue(mealTags, "selectedFavoriteMeals");
-  })
-}
+  });
+};
 
 export const setSelectedMeal = (meal: SearchedMeal) => {
   commitLocalUpdate(environment, (store) => {
@@ -250,14 +246,13 @@ export const login = async (username: string, password: string) => {
         if (resp.authenticate != null && resp.authenticate.jwtToken != null) {
           fetchCurrentPerson();
           res(resp);
-        }
-        else {
-          console.log('resp:', resp);
-          rej('invalid user credentials');
+        } else {
+          console.log("resp:", resp);
+          rej("invalid user credentials");
         }
       },
     });
-  })
+  });
 };
 
 const logoutMutation = graphql`
@@ -296,7 +291,7 @@ export const getCurrentPerson = (): {
   const store = environment.getStore();
   let record = store.getSource().get("client:currentUser");
   if (record === null || record === undefined) {
-    return { personID: "", personName: "",personRole: "", personSlug: "" };
+    return { personID: "", personName: "", personRole: "", personSlug: "" };
   }
   return {
     personID: record["personID"].toString(),
@@ -307,17 +302,17 @@ export const getCurrentPerson = (): {
 };
 
 const getAllPeopleQuery = graphql`
- query state_peopleQuery {
-  people {
-    nodes {
-      fullName
-      rowId
-      slug
-      role
+  query state_peopleQuery {
+    people {
+      nodes {
+        fullName
+        rowId
+        slug
+        role
+      }
     }
   }
- }
-`
+`;
 
 export const GetAllPeopleInfo = () => {
   const data = useLazyLoadQuery<state_peopleQuery>(
@@ -388,7 +383,7 @@ const createMealPlanGQL = graphql`
     $descFr: String
     $personId: BigInt
     $tags: [String]
-    $startDate: Date 
+    $startDate: Date
     $connections: [ID!]!
     $isTemplate: Boolean
   ) {

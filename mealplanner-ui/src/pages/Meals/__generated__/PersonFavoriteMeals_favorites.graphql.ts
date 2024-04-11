@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db259b2f504461d0e264a948d0bc484d>>
+ * @generated SignedSource<<a3cb3fe6bb8522e44b2f1e0711e06711>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,6 @@ import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 export type CategoryT = "BREAKFAST" | "LUNCH" | "DINNER" | "SNACK" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PersonFavoriteMeals_favorites$data = {
-  readonly gqLocalState: {
-    readonly selectedFavoriteMeals: ReadonlyArray<string> | null;
-  };
   readonly people: {
     readonly nodes: ReadonlyArray<{
       readonly favoriteMeals: {
@@ -207,35 +204,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "kind": "ClientExtension",
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "GQLocalState",
-          "kind": "LinkedField",
-          "name": "gqLocalState",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "selectedFavoriteMeals",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ]
     }
   ],
   "type": "Query",
   "abstractKey": null
 };
 
-(node as any).hash = "ed7cd897fa668b44d236208f6198e3ff";
+(node as any).hash = "ce8985b62d5b8404af8ef4f68783f551";
 
 export default node;

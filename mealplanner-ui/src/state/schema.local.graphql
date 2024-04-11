@@ -1,28 +1,27 @@
 # This is to maintain global state in the client side
-# Need to add "schemaExtensions": ["./src"], under relay: (package.json) 
+# Need to add "schemaExtensions": ["./src"], under relay: (package.json)
 # for these types to be used in graphql query, and commitLocalUpdate
 
 type GQLocalState {
-    selectedMeal: SelectedMeal
-    currentUser: CurrentLoggedInUser
-    selectedMealPlanTags: [String!]
-    selectedMealTags: [String!]
-    selectedFavoriteMeals: [String!]
+  selectedMeal: SelectedMeal
+  currentUser: CurrentLoggedInUser
+  selectedMealPlanTags: [String!]
+  selectedMealTags: [String!]
 }
 
 type SelectedMeal {
-    id : ID!
-    rowId: BigInt!
-    nameEn: String!
+  id: ID!
+  rowId: BigInt!
+  nameEn: String!
 }
 
 type CurrentLoggedInUser {
-    personID: BigInt!
-    personName: String!
-    personRole: String!
-    personSlug: String!
+  personID: BigInt!
+  personName: String!
+  personRole: String!
+  personSlug: String!
 }
 
 extend type Query {
-    gqLocalState: GQLocalState!
+  gqLocalState: GQLocalState!
 }

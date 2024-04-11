@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0548463582ced1601017ffb7fe7e8ac>>
+ * @generated SignedSource<<f4558d0e8e687053c26b6b6c73ebbbab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,6 @@ export type MealsDataQuery$data = {
   } | null;
   readonly gqLocalState: {
     readonly selectedMealTags: ReadonlyArray<string> | null;
-    readonly selectedFavoriteMeals: ReadonlyArray<string> | null;
   };
   readonly " $fragmentSpreads": FragmentRefs<"MealTags_tags" | "PersonFavoriteMeals_favorites">;
 };
@@ -148,13 +147,6 @@ v12 = {
           "args": null,
           "kind": "ScalarField",
           "name": "selectedMealTags",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "selectedFavoriteMeals",
           "storageKey": null
         }
       ],
@@ -397,6 +389,6 @@ return {
 };
 })();
 
-(node as any).hash = "d7a33370b7dda99dd06b37e425e63f88";
+(node as any).hash = "56973fe44e993fe41d3be5175d288048";
 
 export default node;

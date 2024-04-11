@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<598297fe0afd9a674851c6f7047ebfdf>>
+ * @generated SignedSource<<89480dc98416427ab5152eb13e217fe4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -251,29 +251,6 @@ return {
           }
         ],
         "storageKey": null
-      },
-      {
-        "kind": "ClientExtension",
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "GQLocalState",
-            "kind": "LinkedField",
-            "name": "gqLocalState",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "selectedFavoriteMeals",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ]
       }
     ]
   },

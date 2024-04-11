@@ -2,9 +2,9 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
 import { getCurrentPerson } from "../../state/state";
 import { MealsDataQuery } from "./__generated__/MealsDataQuery.graphql";
-  
+
 const mealsDataQuery = graphql`
-  query MealsDataQuery($slug: String!)  {
+  query MealsDataQuery($slug: String!) {
     meals(orderBy: [ID_DESC], first: 1000) {
       nodes {
         rowId
@@ -26,9 +26,6 @@ const mealsDataQuery = graphql`
     }
     # fragment name from PersonFavoriteMeals
     ...PersonFavoriteMeals_favorites @arguments(slug: $slug)
-    gqLocalState {
-      selectedFavoriteMeals
-    }
   }
 `;
 
@@ -36,8 +33,8 @@ export const useMealsData = () => {
   const slug = getCurrentPerson().personSlug;
   const data = useLazyLoadQuery<MealsDataQuery>(
     mealsDataQuery,
-    {slug: slug as string},
+    { slug: slug as string },
     { fetchPolicy: "store-or-network" }
   );
   return data;
-}
+};

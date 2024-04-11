@@ -3,15 +3,14 @@ import { commitMutation } from "relay-runtime";
 import environment from "../../relay/environment";
 
 const addFavoriteMealGQL = graphql`
-mutation AddFavoriteMealMutation($mealIdParam: BigInt!) {
-    addFavoriteMeal(input: {mealIdParam: $mealIdParam}) {
-          preflight
-        }
-      }
+  mutation AddFavoriteMealMutation($mealIdParam: BigInt!) {
+    addFavoriteMeal(input: { mealIdParam: $mealIdParam }) {
+      preflight
+    }
+  }
 `;
 
-
-export const addFavoriteMeal = (id:string) => {
+export const addFavoriteMeal = (id: string) => {
   return new Promise((res, rej) => {
     commitMutation(environment, {
       mutation: addFavoriteMealGQL,
@@ -26,6 +25,5 @@ export const addFavoriteMeal = (id:string) => {
         rej(errors);
       },
     });
-   });
-  };
-
+  });
+};

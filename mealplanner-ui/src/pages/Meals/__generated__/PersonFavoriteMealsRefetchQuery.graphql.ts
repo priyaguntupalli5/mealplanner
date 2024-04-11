@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51b4b2d3a92807c6d00240e28892bfeb>>
+ * @generated SignedSource<<612870122f2287b23f2a71498f4372d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -214,29 +214,6 @@ return {
           }
         ],
         "storageKey": null
-      },
-      {
-        "kind": "ClientExtension",
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "GQLocalState",
-            "kind": "LinkedField",
-            "name": "gqLocalState",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "selectedFavoriteMeals",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ]
       }
     ]
   },
@@ -251,6 +228,6 @@ return {
 };
 })();
 
-(node as any).hash = "ed7cd897fa668b44d236208f6198e3ff";
+(node as any).hash = "ce8985b62d5b8404af8ef4f68783f551";
 
 export default node;

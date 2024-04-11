@@ -11,9 +11,6 @@ export const FavoriteMealsFragment = graphql`
   fragment PersonFavoriteMeals_favorites on Query
   @argumentDefinitions(slug: { type: "String!" })
   @refetchable(queryName: "PersonFavoriteMealsRefetchQuery") {
-    gqLocalState {
-      selectedFavoriteMeals
-    }
     people(filter: { slug: { equalTo: $slug } }, first: 1) {
       nodes {
         favoriteMeals {
