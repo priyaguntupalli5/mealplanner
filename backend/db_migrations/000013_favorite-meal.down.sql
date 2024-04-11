@@ -1,0 +1,2 @@
+revoke execute on function app.add_favorite_meal(bigint) from app_user,app_admin,app_meal_designer;
+revoke execute on function app.remove_favorite_meal(bigint) from app_user,app_admin,app_meal_designer;
