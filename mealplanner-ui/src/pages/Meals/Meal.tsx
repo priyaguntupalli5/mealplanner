@@ -329,8 +329,7 @@ export const Meal = () => {
                               <>
                                 {" "}
                                 <br />
-                                Substitute: {ingredient.substituteIngredient.name} <br />
-                                Reason: {ingredient.substituteIngredient.substituteReason}
+                                <span style={{fontStyle: "italic"}}>*Substitute: {ingredient.substituteIngredient.name}</span> <br />
                               </>
                             ) : (
                               <></>
