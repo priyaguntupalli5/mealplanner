@@ -163,8 +163,10 @@ export const ShoppingList = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body2">
-            <strong>Disclaimer:</strong> 
-            <em>The suggested products are intended to be used as reference for informational purposes only. This is not a recommendation of where to buy. Clients need to research and verify which is suitable to their needs independently. Prices are indicative as per the data procured in March 2024. The prices may vary subject to the time of purchase, store, and mode of purchase.</em>
+            <em>
+              <strong>Disclaimer:</strong> 
+              The suggested products are intended to be used as reference for informational purposes only. This is not a recommendation of where to buy. Clients need to research and verify which is suitable to their needs independently. Prices are indicative as per the data procured in March 2024. The prices may vary subject to the time of purchase, store, and mode of purchase.
+            </em>
           </Typography>
         </Grid>
         <TableContainer component={Paper}>
