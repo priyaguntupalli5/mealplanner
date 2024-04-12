@@ -41,6 +41,7 @@ const shoppingListQuery = graphql`
                   nodes {
                     id
                     nameEn
+                    price
                   }
                 }
               }
@@ -66,11 +67,17 @@ export const ShoppingList = () => {
     name: string;
   }
 
+  interface Product {
+    id: string;
+    productName: string;
+    price: any;
+  }
+
   interface MealIngredient {
     mealsById: Meal[];
-    quantity: any[][];
-    unit: string[][];
-    matchedProducts: string[];
+    quantity: any[];
+    unit: string[];
+    matchedProducts: Product[];
   }
   
   const mealsByIngredient: Map<string, MealIngredient> = new Map<string, MealIngredient>();
@@ -93,7 +100,11 @@ export const ShoppingList = () => {
         const productKeyword = ingredient.productKeyword.toLowerCase();
         const quantity = ingredient.quantity;
         const unit = ingredient.unit;
-        const matchedProducts = ingredient.matchedProducts.nodes.map(product => product.nameEn);
+        const matchedProducts = ingredient.matchedProducts.nodes.map(product => ({
+          id: product.id,
+          productName: product.nameEn, 
+          price: product.price
+        }));
 
         if (mealId && mealName) {
           if (ingredientName !== productKeyword){
@@ -107,22 +118,23 @@ export const ShoppingList = () => {
             if (!mealExists) {
               existingIngredientDetails.mealsById.push({ id: mealId, name: mealName });
               existingIngredientDetails.quantity.push(quantity);
-              existingIngredientDetails.unit.push([unit]);
+              existingIngredientDetails.unit.push(unit);
               
             }
             existingIngredientDetails.matchedProducts.push(
               ...matchedProducts.filter(
-                (product) => !existingIngredientDetails.matchedProducts.includes(product)
+                (product) => !existingIngredientDetails.matchedProducts.some(p => p.id === product.id)
               )  
             );
+            
                 
             mealsByIngredient.set(ingredientName, existingIngredientDetails);
           } else {
             mealsByIngredient.set(ingredientName, {
               mealsById: [{ id: mealId, name: mealName }],
               quantity: [quantity],
-              unit: [[unit]],
-              matchedProducts,
+              unit: [unit],
+              matchedProducts: matchedProducts
             });
           }
         }
@@ -169,7 +181,7 @@ export const ShoppingList = () => {
                     {ingredientDetails.quantity.map((mealQuantities, index) => (
                       <div key={index}>
                         <li>
-                          {ingredientDetails.mealsById[index].name} {' - '}
+                          {ingredientDetails.mealsById[index].name}{' - '}
                           {mealQuantities} {ingredientDetails.unit[index]} 
                           {mealCounts.get(ingredientDetails.mealsById[index].id)! > 1 && ` x${mealCounts.get(ingredientDetails.mealsById[index].id)}`}
                         </li>
@@ -180,7 +192,9 @@ export const ShoppingList = () => {
                     {ingredientDetails.matchedProducts.length > 0 ? (
                       ingredientDetails.matchedProducts.map((product, index) => (
                         <div key={index}>
-                          <li>{product}</li>
+                          <li>
+                            {product.productName}{' - $'}{product.price}
+                          </li>
                         </div>
                       ))
                     ) : (
