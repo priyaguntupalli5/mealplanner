@@ -278,7 +278,7 @@ export const CreateMealPlan = ({ connection, refetch }: { connection: string, re
                     descFr: descriptionFr,
                     personId: userId || null,
                     tags: tags,
-                    //startDate: startDate,
+                    startDate: startDate,
                     connections: [connection],
                     isTemplate: planType === 'template' ? true : false
                   }).then(() => {
