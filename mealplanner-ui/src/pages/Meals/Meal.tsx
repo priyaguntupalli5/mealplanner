@@ -308,6 +308,9 @@ export const Meal = () => {
                 "#ingredientsTable thead": {
                   borderBottom: "1px solid black",
                 },
+                "#ingredientsTable td": {
+                  verticalAlign: "top",
+                },
               }}
             >
               <>
@@ -333,7 +336,7 @@ export const Meal = () => {
                                 </span>
                                 <br />
                                 {ingredient.substituteReason && (
-                                <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
+                                  <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
                                     *Reason: {ingredient.substituteReason}
                                   </span>
                                 )}
@@ -342,31 +345,25 @@ export const Meal = () => {
                               <></>
                             )}
                           </td>
-                          <td style={{textAlign: "center"}}>
+                          <td style={{ textAlign: "center", verticalAlign: "top" }}>
                             {ingredient.quantity}
                             {ingredient.substituteIngredient ? (
                               <>
                                 <br />
                                 <span>{ingredient.substituteIngredient.quantity}</span>
                                 <br />
-                                {ingredient.substituteReason && (
-                                  <span style={{ color: "#E8F5E9" }}>{" - "}</span>
-                                )}
                               </>
                             ) : (
                               <></>
                             )}
                           </td>
-                          <td style={{paddingLeft: "0.5rem"}}>
+                          <td style={{ paddingLeft: "0.5rem" }}>
                             {ingredient.unit}
                             {ingredient.substituteIngredient ? (
                               <>
                                 <br />
                                 <span>{ingredient.substituteIngredient.unit}</span>
                                 <br />
-                                {ingredient.substituteReason && (
-                                  <span style={{ color: "#E8F5E9" }}>{" - "}</span>
-                                )}
                               </>
                             ) : (
                               <></>
