@@ -357,7 +357,7 @@ export const Meal = () => {
                               <></>
                             )}
                           </td>
-                          <td>
+                          <td style={{paddingLeft: "0.5rem"}}>
                             {ingredient.unit}
                             {ingredient.substituteIngredient ? (
                               <>
