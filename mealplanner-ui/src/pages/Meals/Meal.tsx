@@ -91,12 +91,12 @@ const mealQuery = graphql`
           quantity
           unit
           substituteIngredientId
+          substituteReason
           substituteIngredient {
             id
             name
             quantity
             unit
-            substituteReason
           }
         }
       }
@@ -299,7 +299,7 @@ export const Meal = () => {
               variant="body1"
               sx={{
                 "#ingredientsTable tbody tr:nth-of-type(even)": {
-                  backgroundColor: "#E8F5E9" /* Slightly darker gray for odd rows */,
+                  backgroundColor: "#E8F5E9" /* Slightly darker green for even rows */,
                 },
                 "#ingredientsTable": {
                   border: "1px solid #E0E0E0",
@@ -316,7 +316,7 @@ export const Meal = () => {
                     <tr style={{ backgroundColor: "#E8F5E9" }}>
                       <th style={{ textAlign: "left" }}>Ingredients</th>
                       <th style={{ textAlign: "center" }}>Qtt</th>
-                      <th style={{ textAlign: "center", paddingLeft: "10px" }}>Unit</th>
+                      <th style={{ textAlign: "center" }}>Unit</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -327,20 +327,31 @@ export const Meal = () => {
                             {ingredient.name}
                             {ingredient.substituteIngredient ? (
                               <>
-                                {" "}
                                 <br />
-                                <span style={{fontStyle: "italic"}}>*Substitute: {ingredient.substituteIngredient.name}</span> <br />
+                                <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
+                                  *Substitute: {ingredient.substituteIngredient.name}
+                                </span>
+                                <br />
+                                {ingredient.substituteReason && (
+                                <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
+                                    *Reason: {ingredient.substituteReason}
+                                  </span>
+                                )}
                               </>
                             ) : (
                               <></>
                             )}
                           </td>
-                          <td>
+                          <td style={{textAlign: "center"}}>
                             {ingredient.quantity}
                             {ingredient.substituteIngredient ? (
                               <>
-                                {" "}
-                                <br /> {ingredient.substituteIngredient.quantity}{" "}
+                                <br />
+                                <span>{ingredient.substituteIngredient.quantity}</span>
+                                <br />
+                                {ingredient.substituteReason && (
+                                  <span style={{ color: "#E8F5E9" }}>{" - "}</span>
+                                )}
                               </>
                             ) : (
                               <></>
@@ -350,7 +361,12 @@ export const Meal = () => {
                             {ingredient.unit}
                             {ingredient.substituteIngredient ? (
                               <>
-                                <br /> {ingredient.substituteIngredient.unit}{" "}
+                                <br />
+                                <span>{ingredient.substituteIngredient.unit}</span>
+                                <br />
+                                {ingredient.substituteReason && (
+                                  <span style={{ color: "#E8F5E9" }}>{" - "}</span>
+                                )}
                               </>
                             ) : (
                               <></>
