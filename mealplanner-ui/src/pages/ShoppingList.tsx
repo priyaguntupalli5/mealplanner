@@ -68,6 +68,7 @@ export const ShoppingList = () => {
   interface Meal {
     id: string;
     name: string;
+    matchedProducts: Product[]
   }
 
   interface Product {
@@ -81,7 +82,6 @@ export const ShoppingList = () => {
     quantity: any[];
     unit: string[];
     substituteIngredient: string;
-    matchedProducts: Product[];
   }
   
   const mealsByIngredient: Map<string, MealIngredient> = new Map<string, MealIngredient>();
@@ -121,27 +121,19 @@ export const ShoppingList = () => {
             const mealExists = existingIngredientDetails.mealsById.some(meal => meal.id === mealId);
 
             if (!mealExists) {
-              existingIngredientDetails.mealsById.push({ id: mealId, name: mealName });
+              existingIngredientDetails.mealsById.push({ id: mealId, name: mealName, matchedProducts: matchedProducts});
               existingIngredientDetails.quantity.push(quantity);
               existingIngredientDetails.unit.push(unit);
               
             }
             existingIngredientDetails.substituteIngredient = subIngredient;
-            existingIngredientDetails.matchedProducts.push(
-              ...matchedProducts.filter(
-                (product) => !existingIngredientDetails.matchedProducts.some(p => p.id === product.id)
-              )  
-            );
-            
-                
             mealsByIngredient.set(ingredientName, existingIngredientDetails);
           } else {
             mealsByIngredient.set(ingredientName, {
-              mealsById: [{ id: mealId, name: mealName }],
+              mealsById: [{ id: mealId, name: mealName, matchedProducts: matchedProducts }],
               quantity: [quantity],
               unit: [unit],
-              substituteIngredient: subIngredient,
-              matchedProducts: matchedProducts
+              substituteIngredient: subIngredient
             });
           }
         }
@@ -150,88 +142,95 @@ export const ShoppingList = () => {
   });
   return (
     <>
-      <Grid container spacing="5" sx={{ padding: "2rem" }}>
-        <Grid xs={12}>
-          <Typography variant="subtitle1" sx={{ mr: 5 }}>
-            {mealPlan?.person && `Prepared for ${mealPlan.person.fullName}`}
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <Typography variant="h4">
-            {"Shopping List - "}{mealPlan?.nameEn} &nbsp;
-            <Button
-              onClick={() => {
-                window.print();
-              }}
-            >
-              <Print></Print>
-            </Button>
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="body2" style={{ marginBottom: '1em' }}>
-            <div style={{ fontStyle: 'italic' }}>
-              <strong>Disclaimer:</strong> 
-              The suggested products are intended to be used as reference for informational purposes only. This is not a recommendation of where to buy. Clients need to research and verify which is suitable to their needs independently. Prices are indicative as per the data procured in March 2024. The prices may vary subject to the time of purchase, store, and mode of purchase.
-            </div>
-          </Typography>
-        </Grid>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell style={{ color: "#000" }}>Ingredient</TableCell>
-                <TableCell style={{ color: "#000" }}>Meal - Quantity/Unit</TableCell>
-                <TableCell style={{ color: "#000" }}>Suggested Product</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Array.from(mealsByIngredient.entries()).map(([ingredientName, ingredientDetails]) => (
-                <TableRow key={ingredientName}>
-                  <TableCell>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <Checkbox />
-                      <div>
-                        {ingredientName}
-                        {ingredientDetails.substituteIngredient !== "" &&
-                          <div style={{ fontStyle: 'italic' }}>
-                            {'Substitutes: '}
-                            {ingredientDetails.substituteIngredient}
-                          </div>
-                        }
+      {Array.from(mealsByIngredient.entries()).length === 0 ? (
+          <h3 style={{ textAlign: "center" }}>There are no meals added to this mealplan </h3>
+      ) : (
+        <Grid container spacing="5" sx={{ padding: "2rem" }}>
+          <Grid xs={12}>
+            <Typography variant="subtitle1" sx={{ mr: 5 }}>
+              {mealPlan?.person && `Prepared for ${mealPlan.person.fullName}`}
+            </Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <Typography variant="h4">
+              Shopping List - {mealPlan?.nameEn} &nbsp;
+              <Button
+                onClick={() => {
+                  window.print();
+                }}
+              >
+                <Print></Print>
+              </Button>
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body2" style={{ marginBottom: '1em' }}>
+              <div style={{ fontStyle: 'italic' }}>
+                <strong>Disclaimer:</strong> 
+                The suggested products are intended to be used as reference for informational purposes only. This is not a recommendation of where to buy. Clients need to research and verify which is suitable to their needs independently. Prices are indicative as per the data procured in March 2024. The prices may vary subject to the time of purchase, store, and mode of purchase.
+              </div>
+            </Typography>
+          </Grid>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ color: "#000" }}>Ingredient</TableCell>
+                  <TableCell style={{ color: "#000" }}>Meal - Quantity/Unit</TableCell>
+                  <TableCell style={{ color: "#000" }}>Suggested Product</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Array.from(mealsByIngredient.entries()).map(([ingredientName, ingredientDetails]) => (
+                  <TableRow key={ingredientName}>
+                    <TableCell>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <Checkbox />
+                        <div>
+                          {ingredientName}
+                          {ingredientDetails.substituteIngredient !== "" &&
+                            <div style={{ fontStyle: 'italic' }}>
+                              Substitutes: {ingredientDetails.substituteIngredient}
+                            </div>
+                          }
+                        </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {ingredientDetails.quantity.map((mealQuantities, index) => (
-                      <div key={index}>
-                        <li>
-                          {ingredientDetails.mealsById[index].name}{' - '}
-                          {mealQuantities} {ingredientDetails.unit[index]} 
-                          {mealCounts.get(ingredientDetails.mealsById[index].id)! > 1 && ` x${mealCounts.get(ingredientDetails.mealsById[index].id)}`}
-                        </li>
-                      </div>
-                    ))}
-                  </TableCell>
-                  <TableCell>
-                    {ingredientDetails.matchedProducts.length > 0 ? (
-                      ingredientDetails.matchedProducts.map((product, index) => (
+                    </TableCell>
+                    <TableCell>
+                      {ingredientDetails.quantity.map((mealQuantities, index) => (
                         <div key={index}>
                           <li>
-                            {product.productName}{' - $'}{product.price}
+                            {ingredientDetails.mealsById[index].name} - {mealQuantities} {ingredientDetails.unit[index]} 
+                            {mealCounts.get(ingredientDetails.mealsById[index].id)! > 1 && ` x${mealCounts.get(ingredientDetails.mealsById[index].id)}`}
                           </li>
                         </div>
-                      ))
-                    ) : (
-                      <p>N/A</p>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Grid>
+                      ))}
+                    </TableCell>
+                    <TableCell>
+                      {ingredientDetails.mealsById.map((meal, index) => (
+                        meal.matchedProducts.length > 0 ? (
+                            ingredientDetails.mealsById.length === 1 ? (
+                              meal.matchedProducts.slice(0, 3).map((product, productIndex) => (
+                              <li key={productIndex}>
+                                {product.productName} - ${product.price}
+                              </li>
+                            ))
+                          ) : (
+                            <li key={index}>
+                              {meal.matchedProducts[0].productName} - ${meal.matchedProducts[0].price}
+                            </li>
+                          )
+                        ) : null
+                      ))}
+                      {ingredientDetails.mealsById.every(meal => meal.matchedProducts.length === 0) && 'N/A'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      )}
     </>
   );
 };
