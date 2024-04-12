@@ -14,7 +14,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
 import { useParams } from "react-router";
 import { MealQuery } from "./__generated__/MealQuery.graphql";
-import React, { useEffect } from "react";
+import React from "react";
 
 const mealQuery = graphql`
   query MealQuery($mealId: BigInt!) {
@@ -150,11 +150,6 @@ export const Meal = () => {
       </span>
     ));
   };
-  useEffect(() => {
-    console.log(meal)
-    console.log(arrayOfSubstituteIngredientsIds)
-    console.log(arrayOfIngredientsWithoutSubstituteIngredients)
-  }, [meal])
   return (
     <>
       <Box
@@ -311,6 +306,10 @@ export const Meal = () => {
                 "#ingredientsTable td": {
                   verticalAlign: "top",
                 },
+                "#ingredientsTable span": {
+                  fontStyle: "italic",
+
+                }
               }}
             >
               <>
