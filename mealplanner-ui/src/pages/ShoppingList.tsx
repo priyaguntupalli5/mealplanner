@@ -37,6 +37,9 @@ const shoppingListQuery = graphql`
                 quantity
                 unit
                 productKeyword
+                substituteIngredient {
+                  name
+                }
                 matchedProducts {
                   nodes {
                     id
@@ -77,6 +80,7 @@ export const ShoppingList = () => {
     mealsById: Meal[];
     quantity: any[];
     unit: string[];
+    substituteIngredient: string;
     matchedProducts: Product[];
   }
   
@@ -100,6 +104,7 @@ export const ShoppingList = () => {
         const productKeyword = ingredient.productKeyword.toLowerCase();
         const quantity = ingredient.quantity;
         const unit = ingredient.unit;
+        const subIngredient = ingredient.substituteIngredient?.name.toLowerCase() || "";
         const matchedProducts = ingredient.matchedProducts.nodes.map(product => ({
           id: product.id,
           productName: product.nameEn, 
@@ -121,6 +126,7 @@ export const ShoppingList = () => {
               existingIngredientDetails.unit.push(unit);
               
             }
+            existingIngredientDetails.substituteIngredient = subIngredient;
             existingIngredientDetails.matchedProducts.push(
               ...matchedProducts.filter(
                 (product) => !existingIngredientDetails.matchedProducts.some(p => p.id === product.id)
@@ -134,6 +140,7 @@ export const ShoppingList = () => {
               mealsById: [{ id: mealId, name: mealName }],
               quantity: [quantity],
               unit: [unit],
+              substituteIngredient: subIngredient,
               matchedProducts: matchedProducts
             });
           }
@@ -151,7 +158,7 @@ export const ShoppingList = () => {
         </Grid>
         <Grid item xs={8}>
           <Typography variant="h4">
-            Shopping List - {mealPlan?.nameEn} &nbsp;
+            {"Shopping List - "}{mealPlan?.nameEn} &nbsp;
             <Button
               onClick={() => {
                 window.print();
@@ -162,11 +169,11 @@ export const ShoppingList = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="body2">
-            <em>
+          <Typography variant="body2" style={{ marginBottom: '1em' }}>
+            <div style={{ fontStyle: 'italic' }}>
               <strong>Disclaimer:</strong> 
               The suggested products are intended to be used as reference for informational purposes only. This is not a recommendation of where to buy. Clients need to research and verify which is suitable to their needs independently. Prices are indicative as per the data procured in March 2024. The prices may vary subject to the time of purchase, store, and mode of purchase.
-            </em>
+            </div>
           </Typography>
         </Grid>
         <TableContainer component={Paper}>
@@ -182,8 +189,18 @@ export const ShoppingList = () => {
               {Array.from(mealsByIngredient.entries()).map(([ingredientName, ingredientDetails]) => (
                 <TableRow key={ingredientName}>
                   <TableCell>
-                    <Checkbox />
-                    {ingredientName}
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Checkbox />
+                      <div>
+                        {ingredientName}
+                        {ingredientDetails.substituteIngredient !== "" &&
+                          <div style={{ fontStyle: 'italic' }}>
+                            {'Substitutes: '}
+                            {ingredientDetails.substituteIngredient}
+                          </div>
+                        }
+                      </div>
+                    </div>
                   </TableCell>
                   <TableCell>
                     {ingredientDetails.quantity.map((mealQuantities, index) => (
