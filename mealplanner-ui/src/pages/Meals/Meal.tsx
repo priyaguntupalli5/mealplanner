@@ -332,14 +332,15 @@ export const Meal = () => {
                               <>
                                 <br />
                                 <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
-                                  *Substitute: {ingredient.substituteIngredient.name}
+                                  Substitute: {ingredient.substituteIngredient.name}
                                 </span>
                                 <br />
-                                {ingredient.substituteReason && (
-                                  <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
-                                    *Reason: {ingredient.substituteReason}
-                                  </span>
-                                )}
+                                <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
+                                  Reason:{" "}
+                                  {ingredient.substituteReason
+                                    ? ingredient.substituteReason
+                                    : "Not specified"}
+                                </span>
                               </>
                             ) : (
                               <></>
