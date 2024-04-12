@@ -61,7 +61,7 @@ export const CreateMealPlan = ({ connection, refetch }: { connection: string, re
     descriptionFr: "",
     tags: [],
     disableButton: true,
-    startDate: "",
+    startDate: null,
     isTemplate: false
   }
 
@@ -278,8 +278,8 @@ export const CreateMealPlan = ({ connection, refetch }: { connection: string, re
                     descFr: descriptionFr,
                     personId: userId || null,
                     tags: tags,
-                    startDate: startDate,
-                connections: [connection],
+                    //startDate: startDate,
+                    connections: [connection],
                     isTemplate: planType === 'template' ? true : false
                   }).then(() => {
                     console.log('refetching tags');
