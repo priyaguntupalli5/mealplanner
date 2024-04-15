@@ -48,13 +48,12 @@ mutation ResetPassword($personId:BigInt, $passwd:String){
 }`;
 
 export const resetPassword = async (
-    client: ApolloClient<object>,
-    personId: string, 
-    password: string
-) => {
-    const result = await client.mutate(
-        {mutation: resetPasswordMutation,
-            variables: {personId, passwd: password}
-        }
-    );
-}
+  client: ApolloClient<object>,
+  personId: string,
+  password: string
+): Promise<void> => {
+  let result = await client.mutate({
+    mutation: resetPasswordMutation,
+    variables: { personId: personId, passwd: password },
+  });
+};
