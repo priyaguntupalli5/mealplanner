@@ -16,8 +16,8 @@ import { Link, useParams } from "react-router-dom";
 
 const IngredientActions = ({ id, mealName }: { id: string; mealName: string }) => {
   return (
-    <TopToolbar style={{ display: 'flex', alignItems: 'center' }}>
-    <Typography variant="h6" style={{marginRight: 'auto'}}>Meal: {mealName}</Typography>
+    <TopToolbar style={{ display: 'contents', alignItems: 'center' }}>
+    <Typography variant="body1" style={{marginRight: 'auto'}}> <span style={{ fontWeight: 'bold' }}>Meal:</span>  <span style={{ fontStyle: 'italic' }}>{mealName}</span></Typography>
     <div>
       <CreateIngredientButton id={id} />
       <ExportButton />
