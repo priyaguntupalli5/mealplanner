@@ -83,11 +83,29 @@ const mealQuery = graphql`
         vitE
         vitK
       }
+      ingredients {
+        nodes {
+          rowId
+          id
+          name
+          quantity
+          unit
+          substituteIngredientId
+          substituteReason
+          substituteIngredient {
+            id
+            name
+            quantity
+            unit
+          }
+        }
+      }
     }
   }
 `;
 
 export const Meal = () => {
+  
   const params = useParams();
   const node = useLazyLoadQuery<MealQuery>(
     mealQuery,
@@ -99,6 +117,15 @@ export const Meal = () => {
   const nutritionData = data
   ? Object.entries(data).filter(([key, value]) => value !== null).map(([key, value]) => <React.Fragment>{key}: {value}<br /></React.Fragment>)
   : 'No data';
+
+  const arrayOfSubstituteIngredientsIds = meal?.ingredients?.nodes
+    ?.filter((item) => item?.substituteIngredientId)
+    .map((item) => item?.substituteIngredientId);
+
+  const arrayOfIngredientsWithoutSubstituteIngredients = meal?.ingredients?.nodes?.filter(
+    (item) => !arrayOfSubstituteIngredientsIds?.includes(item.rowId) 
+  );
+  
   
   const theme = useTheme();
   const tagStyle = {
@@ -162,36 +189,28 @@ export const Meal = () => {
           </Typography>
         </Paper>
         <Tooltip title={nutritionData}>
-        <Paper
-          sx={{
-            textAlign: "center",
-            width: "160px",
-            opacity: "0.7",
-            position: "absolute",
-            right: 50,
-            top: 250,
-            backgroundColor: "black",
-          }}
-        >
-          <Typography variant="caption" color="whitesmoke">
-            Nutrition rating
-          </Typography>
-          <Rating
-            name="read-only"
-            value={
-              meal?.nutritionRating === undefined ? null : meal?.nutritionRating
-            }
-            readOnly
-          />
-        </Paper>
+          <Paper
+            sx={{
+              textAlign: "center",
+              width: "160px",
+              opacity: "0.7",
+              position: "absolute",
+              right: 50,
+              top: 250,
+              backgroundColor: "black",
+            }}
+          >
+            <Typography variant="caption" color="whitesmoke">
+              Nutrition rating
+            </Typography>
+            <Rating
+              name="read-only"
+              value={meal?.nutritionRating === undefined ? null : meal?.nutritionRating}
+              readOnly
+            />
+          </Paper>
         </Tooltip>
-        <Typography
-          variant="body1"
-          lineHeight="2rem"
-          position="absolute"
-          top="300px"
-          left="50px"
-        >
+        <Typography variant="body1" lineHeight="2rem" position="absolute" top="300px" left="50px">
           {displayTags()}
         </Typography>
       </Box>
@@ -246,24 +265,17 @@ export const Meal = () => {
                 </span>
               ))}
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{ display: "none", displayPrint: "block" }}
-            >
+            <Typography variant="body1" sx={{ display: "none", displayPrint: "block" }}>
               {displayTags()}
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{ display: "none", displayPrint: "block" }}
-            >
-              Estimated Price: {displayCost()} Nutrition Rating:{" "}
-              {meal?.nutritionRating}
+            <Typography variant="body1" sx={{ display: "none", displayPrint: "block" }}>
+              Estimated Price: {displayCost()} Nutrition Rating: {meal?.nutritionRating}
             </Typography>
             <Typography variant="caption">
-              Meal Code: {meal?.code} &nbsp; Prep Time:{" "} {meal?.prepTime} mins &nbsp; 
-              Cook Time:{" "} {meal?.cookTime} mins &nbsp; Portions: {meal?.portions} &nbsp;
-              Serving Size: {meal?.servingsSize} {meal?.servingsSizeUnit} &nbsp;
-              Serving Cost: {meal?.servingCost}$
+              Meal Code: {meal?.code} &nbsp; Prep Time: {meal?.prepTime} mins &nbsp; Cook Time:{" "}
+              {meal?.cookTime} mins &nbsp; Portions: {meal?.portions} &nbsp; Serving Size:{" "}
+              {meal?.servingsSize} {meal?.servingsSizeUnit} &nbsp; Serving Cost: {meal?.servingCost}
+              $
             </Typography>
 
             {/* Explicitly indicate meal description is not available*/}
@@ -273,14 +285,98 @@ export const Meal = () => {
                 {meal.descriptionEn}{" "}
               </Typography>
             ) : (
-              <Typography color="gray">
-                No meal description available
-              </Typography>
+              <Typography color="gray">No meal description available</Typography>
             )}
             <Typography paddingBottom="1em">{meal?.descriptionFr}</Typography>
           </Grid>
           <Grid item xs={3}>
-            <Typography variant="h6"> Ingredients </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                "#ingredientsTable tbody tr:nth-of-type(even)": {
+                  backgroundColor: "#E8F5E9" /* Slightly darker green for even rows */,
+                },
+                "#ingredientsTable": {
+                  border: "1px solid #E0E0E0",
+                  padding: "0.3em",
+                },
+                "#ingredientsTable thead": {
+                  borderBottom: "1px solid black",
+                },
+                "#ingredientsTable td": {
+                  verticalAlign: "top",
+                },
+                "#ingredientsTable span": {
+                  fontStyle: "italic",
+
+                }
+              }}
+            >
+              <>
+                <table id="ingredientsTable" cellSpacing="0" cellPadding="0">
+                  <thead>
+                    <tr style={{ backgroundColor: "#E8F5E9" }}>
+                      <th style={{ textAlign: "left" }}>Ingredients</th>
+                      <th style={{ textAlign: "center" }}>Qtt</th>
+                      <th style={{ textAlign: "center" }}>Unit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {arrayOfIngredientsWithoutSubstituteIngredients?.map((ingredient) => {
+                      return (
+                        <tr key={ingredient.id}>
+                          <td>
+                            {ingredient.name}
+                            {ingredient.substituteIngredient ? (
+                              <>
+                                <br />
+                                <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
+                                  Substitute: {ingredient.substituteIngredient.name}
+                                </span>
+                                <br />
+                                <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
+                                  Reason:{" "}
+                                  {ingredient.substituteReason
+                                    ? ingredient.substituteReason
+                                    : "Not specified"}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </td>
+                          <td style={{ textAlign: "center", verticalAlign: "top" }}>
+                            {ingredient.quantity}
+                            {ingredient.substituteIngredient ? (
+                              <>
+                                <br />
+                                <span>{ingredient.substituteIngredient.quantity}</span>
+                                <br />
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </td>
+                          <td style={{ paddingLeft: "0.5rem" }}>
+                            {ingredient.unit}
+                            {ingredient.substituteIngredient ? (
+                              <>
+                                <br />
+                                <span>{ingredient.substituteIngredient.unit}</span>
+                                <br />
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </td>
+                          <td></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </>
+            </Typography>
           </Grid>
           <Grid item xs={9}>
             <Typography variant="h6"> Method of preparation </Typography>
