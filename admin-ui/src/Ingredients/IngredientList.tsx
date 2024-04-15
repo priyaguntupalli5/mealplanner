@@ -1,20 +1,54 @@
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import {
+  CreateButton,
     Datagrid,
+    ExportButton,
     List,
     NumberField,
     ReferenceField,
     TextField,
+    TopToolbar,
+    useDataProvider,
     useRecordContext,
 } from "react-admin";
 import { Link, useParams } from "react-router-dom";
 
+const IngredientActions = ({ id, mealName }: { id: string; mealName: string }) => {
+  return (
+    <TopToolbar style={{ display: 'flex', alignItems: 'center' }}>
+    <Typography variant="h6" style={{marginRight: 'auto'}}>Meal: {mealName}</Typography>
+    <div>
+      <CreateIngredientButton id={id} />
+      <ExportButton />
+    </div>
+  </TopToolbar>
+  );
+};
+
 export const IngredientList = () => {
   const { id } = useParams();
+  const [mealName, setMealName] = useState('');
+  const dataProvider = useDataProvider();
+
+  useEffect(() => {
+    const fetchMealName = async () => {
+      try {
+        const { data } = await dataProvider.getOne('meals', { id: id });
+        setMealName(data.nameEn);
+      } catch (error) {
+        console.error('Error fetching meal name:', error);
+      }
+    };
+
+    if (id) {
+      fetchMealName();
+    }
+  }, [dataProvider, id]);
+
   return (
     <>
-      {id && <CreateIngredientButton id={id} />}
-      <List resource="ingredients" filter={{ mealId: id }}>
+      {id && <List resource="ingredients" filter={{ mealId: id }} actions={<IngredientActions id={id} mealName={mealName}/>}>
         <Datagrid>
           <NumberField source="code" label="Ingredient code" />
           <TextField source="name" label="Ingredient name" />
@@ -32,7 +66,7 @@ export const IngredientList = () => {
           <EditIngredientButton />
           <MatchIngredientButton />
         </Datagrid>
-      </List>
+      </List>}
     </>
   );
 };
