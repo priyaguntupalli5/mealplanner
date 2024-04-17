@@ -14,6 +14,7 @@ import { FavoriteMealPage } from "./pages/Meals/PersonFavoriteMeals";
 import { ShoppingList } from "./pages/ShoppingList";
 import environment from "./relay/environment";
 import { fetchCurrentPerson, initState } from "./state/state";
+import TermsAndConditions from './layouts/TermsAndConditions';
 
 const theme = createTheme({
   palette: {
@@ -44,16 +45,21 @@ initState();
 
 function App() {
   let [intialized, setInitialized] = useState(false);
+  let [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false);
+
+  const handleTermsAndConditions = (accepted: boolean): void => {
+    setAcceptedTermsAndConditions(accepted);
+  }
 
   useEffect(() => {
-    fetchCurrentPerson().then(() => {
+    fetchCurrentPerson().then((data) => {
+      // setAcceptedTermsAndConditions(!data?.currentPerson?.role) //update this line with whatever new field that is coming from the graphql query 
       setInitialized(true);
     });
   }, []);
   if (!intialized) {
     return <h1>loading...</h1>;
   }
-
   return (
     <RelayEnvironmentProvider environment={environment}>
       <ThemeProvider theme={theme}>
@@ -84,7 +90,14 @@ function App() {
               element={
                 <Suspense fallback={"loading Mealplans list..."}>
                   <LoggedIn>
-                    <MealPlans />
+                    {!acceptedTermsAndConditions ? (
+                      <TermsAndConditions
+                        acceptedTermsAndConditions={acceptedTermsAndConditions}
+                        handleTermsAndConditions={handleTermsAndConditions}
+                      />
+                    ) : (
+                      <MealPlans />
+                    )}
                   </LoggedIn>
                 </Suspense>
               }
