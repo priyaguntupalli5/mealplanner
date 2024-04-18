@@ -31,7 +31,7 @@ comment on function app.product_matched_ingredients(app.product) is 'Given a pro
 
 create or replace function app.product_keyword_ingredients(p app.product) returns SETOF app.ingredient as $$
     SELECT i.*
-    FROM app.ingredient i where i.product_keyword = ANY(p.product_keywords);
+    FROM app.ingredient i where i.product_keyword ilike ANY(p.product_keywords);
 $$ language SQL STABLE;
 comment on function app.product_keyword_ingredients(app.product) is 'Given a product keyword, returns a set of ingredients that have the product keyword';
 
