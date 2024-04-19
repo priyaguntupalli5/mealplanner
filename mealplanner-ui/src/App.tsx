@@ -14,7 +14,9 @@ import { FavoriteMealPage } from "./pages/Meals/PersonFavoriteMeals";
 import { ShoppingList } from "./pages/ShoppingList";
 import environment from "./relay/environment";
 import { fetchCurrentPerson, initState } from "./state/state";
-import TermsAndConditions from './layouts/TermsAndConditions';
+// import TermsAndConditions from './layouts/TermsAndConditions';
+import TermsAndConditions from './pages/TermsAndConditions';
+import { updatePersonTerms } from "./pages/UpdatePersonTerms";
 
 const theme = createTheme({
   palette: {
@@ -48,12 +50,14 @@ function App() {
   let [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false);
 
   const handleTermsAndConditions = (accepted: boolean): void => {
+    updatePersonTerms(accepted);
     setAcceptedTermsAndConditions(accepted);
   }
 
   useEffect(() => {
     fetchCurrentPerson().then((data) => {
-      // setAcceptedTermsAndConditions(!data?.currentPerson?.role) //update this line with whatever new field that is coming from the graphql query 
+      const accepted = data?.currentPerson?.termsAndConditions || false;
+      setAcceptedTermsAndConditions(accepted); 
       setInitialized(true);
     });
   }, []);
