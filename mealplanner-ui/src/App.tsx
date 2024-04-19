@@ -13,10 +13,8 @@ import { Meals } from "./pages/Meals/Meals";
 import { FavoriteMealPage } from "./pages/Meals/PersonFavoriteMeals";
 import { ShoppingList } from "./pages/ShoppingList";
 import environment from "./relay/environment";
-import { fetchCurrentPerson, initState } from "./state/state";
-// import TermsAndConditions from './layouts/TermsAndConditions';
-import TermsAndConditions from './pages/TermsAndConditions';
-import { updatePersonTerms } from "./pages/UpdatePersonTerms";
+import { fetchCurrentPerson, initState, updatePersonTerms } from "./state/state";
+import TermsAndConditions from './pages/TermsAndConditionsModal';
 
 const theme = createTheme({
   palette: {
