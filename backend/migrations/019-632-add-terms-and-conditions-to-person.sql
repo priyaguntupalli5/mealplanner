@@ -20,8 +20,10 @@ BEGIN
     person_id_param := NULLIF(current_setting('jwt.claims.person_id', true), '')::BIGINT;
 
     update app.person
-    set app.person.terms_and_conditions = person_terms
-    WHERE person_id = person_id_param;
+    set terms_and_conditions = person_terms
+    WHERE id = person_id_param;
 END;
 $$ LANGUAGE plpgsql;
+
+grant execute on function app.update_person_terms(boolean) to app_admin, app_meal_designer, app_user;
 

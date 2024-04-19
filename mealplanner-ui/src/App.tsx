@@ -14,7 +14,8 @@ import { FavoriteMealPage } from "./pages/Meals/PersonFavoriteMeals";
 import { ShoppingList } from "./pages/ShoppingList";
 import environment from "./relay/environment";
 import { fetchCurrentPerson, initState } from "./state/state";
-import TermsAndConditions from './layouts/TermsAndConditions';
+import TermsAndConditions from './pages/TermsAndConditions';
+import { updatePersonTerms } from "./pages/UpdatePersonTerms";
 
 const theme = createTheme({
   palette: {
@@ -48,14 +49,14 @@ function App() {
   let [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false);
 
   const handleTermsAndConditions = (accepted: boolean): void => {
-   // console.log("I'm accepted",accepted);
+    updatePersonTerms(accepted);
     setAcceptedTermsAndConditions(accepted);
   }
 
   useEffect(() => {
     fetchCurrentPerson().then((data) => {
-    //  setAcceptedTermsAndConditions(data?.currentPerson?.termsAndConditions); 
-      console.log("I'm person",data?.currentPerson,acceptedTermsAndConditions);
+      const accepted = data?.currentPerson?.termsAndConditions || false;
+      setAcceptedTermsAndConditions(accepted); 
       setInitialized(true);
     });
   }, []);
@@ -92,7 +93,7 @@ function App() {
               element={
                 <Suspense fallback={"loading Mealplans list..."}>
                   <LoggedIn>
-                    {acceptedTermsAndConditions ? (
+                    {acceptedTermsAndConditions ?(
                           <MealPlans />
 
                     ) : (
