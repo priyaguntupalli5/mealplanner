@@ -14,7 +14,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
 import { useParams } from "react-router";
 import { MealQuery } from "./__generated__/MealQuery.graphql";
-import React from "react";
+import React, { useEffect } from "react";
 
 const mealQuery = graphql`
   query MealQuery($mealId: BigInt!) {
@@ -84,19 +84,22 @@ const mealQuery = graphql`
         vitK
       }
       ingredients {
-        nodes {
-          rowId
-          id
-          name
-          quantity
-          unit
-          substituteIngredientId
-          substituteReason
-          substituteIngredient {
-            id
+        edges {
+          node {
             name
+            rowId
             quantity
             unit
+            substituteReason
+            substituteIngredientId
+            substituteIngredient {
+              rowId
+              name
+              unit
+              quantity
+              substituteReason
+              substituteIngredientId
+            }
           }
         }
       }
@@ -118,13 +121,23 @@ export const Meal = () => {
   ? Object.entries(data).filter(([key, value]) => value !== null).map(([key, value]) => <React.Fragment>{key}: {value}<br /></React.Fragment>)
   : 'No data';
 
-  const arrayOfSubstituteIngredientsIds = meal?.ingredients?.nodes
-    ?.filter((item) => item?.substituteIngredientId)
-    .map((item) => item?.substituteIngredientId);
+  const arrayOfAllIngredients = meal?.ingredients?.edges
+  const arrayOfIngredientsWithoutSubstitute = meal?.ingredients?.edges.map((ingredient) => {
+    console.log(ingredient.node.substituteIngredient?.name);
+  })
+  const arrayOfSubstituteIngredientsIds = meal?.ingredients?.edges
+    ?.filter((item) => item?.node.substituteIngredientId)
+    .map((item) => item?.node.substituteIngredientId);
 
-  const arrayOfIngredientsWithoutSubstituteIngredients = meal?.ingredients?.nodes?.filter(
-    (item) => !arrayOfSubstituteIngredientsIds?.includes(item.rowId) 
+  const arrayOfIngredientsWithoutSubstituteIngredients = meal?.ingredients?.edges?.filter(
+    (item) => !arrayOfSubstituteIngredientsIds?.includes(item.node.rowId) 
   );
+  
+  useEffect(() => {
+    console.log(arrayOfSubstituteIngredientsIds);
+    console.log(arrayOfIngredientsWithoutSubstituteIngredients);
+    console.log(arrayOfAllIngredients);
+  }, [])
   
   
   const theme = useTheme();
@@ -324,20 +337,20 @@ export const Meal = () => {
                   <tbody>
                     {arrayOfIngredientsWithoutSubstituteIngredients?.map((ingredient) => {
                       return (
-                        <tr key={ingredient.id}>
+                        <tr key={ingredient.node.rowId}>
                           <td>
-                            {ingredient.name}
-                            {ingredient.substituteIngredient ? (
+                            {ingredient.node.name}
+                            {ingredient.node.substituteIngredient ? (
                               <>
                                 <br />
                                 <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
-                                  Substitute: {ingredient.substituteIngredient.name}
+                                  Substitute: {ingredient.node.substituteIngredient.name}
                                 </span>
                                 <br />
                                 <span style={{ fontStyle: "italic", marginLeft: "0.5rem" }}>
                                   Reason:{" "}
-                                  {ingredient.substituteReason
-                                    ? ingredient.substituteReason
+                                  {ingredient.node.substituteReason
+                                    ? ingredient.node.substituteReason
                                     : "Not specified"}
                                 </span>
                               </>
@@ -346,11 +359,11 @@ export const Meal = () => {
                             )}
                           </td>
                           <td style={{ textAlign: "center", verticalAlign: "top" }}>
-                            {ingredient.quantity}
-                            {ingredient.substituteIngredient ? (
+                            {ingredient.node.quantity}
+                            {ingredient.node.substituteIngredient ? (
                               <>
                                 <br />
-                                <span>{ingredient.substituteIngredient.quantity}</span>
+                                <span>{ingredient.node.substituteIngredient.quantity}</span>
                                 <br />
                               </>
                             ) : (
@@ -358,11 +371,11 @@ export const Meal = () => {
                             )}
                           </td>
                           <td style={{ paddingLeft: "0.5rem" }}>
-                            {ingredient.unit}
-                            {ingredient.substituteIngredient ? (
+                            {ingredient.node.unit}
+                            {ingredient.node.substituteIngredient ? (
                               <>
                                 <br />
-                                <span>{ingredient.substituteIngredient.unit}</span>
+                                <span>{ingredient.node.substituteIngredient.unit}</span>
                                 <br />
                               </>
                             ) : (
