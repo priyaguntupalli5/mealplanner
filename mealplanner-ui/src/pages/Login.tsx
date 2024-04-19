@@ -10,7 +10,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { useLazyLoadQuery } from "react-relay";
 import { Navigate } from "react-router";
-import { getCurrentPerson, login } from "../state/state";
+import { getCurrentPerson, login, updatePersonTerms } from "../state/state";
 import { LoginQuery } from "./__generated__/LoginQuery.graphql";
 
 const query = graphql`
@@ -58,6 +58,8 @@ export const Login = () => {
     }
   );
   if (data.gqLocalState.currentUser?.personID) {
+    if(!getCurrentPerson().personTerms)
+      return <Navigate to="terms" replace />;
     return <Navigate to="mealplans" replace />;
   }
 
