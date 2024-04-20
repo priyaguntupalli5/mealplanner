@@ -1,10 +1,13 @@
 import { Box, CssBaseline } from "@mui/material";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "./Footer";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 
 export const Layout = () => {
+  const location = useLocation();
+  const isTermsPage = location.pathname === '/terms';
+  
   return (
     <React.Fragment>
       <Box
@@ -15,7 +18,7 @@ export const Layout = () => {
         }}
       >
         <CssBaseline />
-        <ResponsiveAppBar />
+        {!isTermsPage && <ResponsiveAppBar />}
         <Outlet />
         <Footer />
       </Box>
