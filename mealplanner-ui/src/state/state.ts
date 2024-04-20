@@ -203,7 +203,7 @@ export const fetchCurrentPerson = async () => {
   let data = await fetchQuery<state_CurrentUserQuery>(
     environment,
     currentUserQuery,
-    {}
+    { fetchPolicy: 'state-or-network' }
   ).toPromise();
   setCurrentUser(data);
   return data;
@@ -213,8 +213,13 @@ function setCurrentUser(data: state_CurrentUserQuery$data | undefined) {
   if (data?.currentPerson) {
     commitLocalUpdate(environment, (store) => {
       let localState = store.get(STATE_ID);
-      store.delete("client:currentUser");
-      let record = store.create("client:currentUser", "CurrentLoggedInUser");
+     // store.delete("client:currentUser");
+      let record = store.get("client:currentUser");
+
+      if(!record) {
+         record = store.create("client:currentUser", "CurrentLoggedInUser");
+      }
+
       record.setValue(data?.currentPerson?.rowId, "personID");
       record.setValue(data?.currentPerson?.fullName, "personName");
       record.setValue(data?.currentPerson?.role, "personRole");

@@ -95,9 +95,9 @@ function App() {
               path="/meals"
               element={
                 <Suspense fallback={"loading Meals list..."}>
-                  {/* <LoggedIn> */}
+                  <LoggedIn>
                   <Meals />
-                  {/* </LoggedIn> */}
+                  </LoggedIn>
                 </Suspense>
               }
             />
@@ -105,9 +105,9 @@ function App() {
               path="/meals/:id"
               element={
                 <Suspense fallback={"loading inner..."}>
-                  {/* <LoggedIn> */}
+                  <LoggedIn>
                   <Meal />
-                  {/* <LoggedIn> */}
+                  </LoggedIn>
                 </Suspense>
               }
             />
@@ -122,7 +122,7 @@ function App() {
               }
             />
             <Route
-              path={`/terms`}
+              path={"/terms"}
               element={
                 <Suspense fallback={"loading terms.."}>
                   <LoggedIn>

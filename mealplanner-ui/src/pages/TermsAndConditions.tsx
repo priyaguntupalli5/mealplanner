@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import { Checkbox } from '@mui/material';
 import { useState } from 'react';
-import { logout, updatePersonTerms } from "../state/state";
+import {  fetchCurrentPerson, logout, updatePersonTerms } from "../state/state";
 import { useNavigate } from 'react-router';
 
 export const TermsAndConditions = () => {
@@ -16,8 +16,9 @@ export const TermsAndConditions = () => {
   const handleCheckboxChange = () => {
     setIsAccepted(!isAccepted);
   };
-  const handleAccept = () => {
+  const handleAccept = async () => {
     updatePersonTerms(true);
+    const data = await fetchCurrentPerson();
     navigate("/mealplans");
   };
 
