@@ -29,10 +29,8 @@ export default function TermsAndConditions({acceptedTermsAndConditions, handleTe
     setIsAccepted(!isAccepted);
   };
   const handleAccept = () => {
-    isAccepted && (
-      //logic to store the state in the database goes here
-      handleTermsAndConditions(true)
-    )     
+    isAccepted && handleTermsAndConditions(true)     
+    setOpen(false);
   };
 
   const descriptionElementRef = useRef<HTMLElement>(null);
