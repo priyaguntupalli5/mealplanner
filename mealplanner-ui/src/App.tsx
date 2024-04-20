@@ -13,8 +13,8 @@ import { Meals } from "./pages/Meals/Meals";
 import { FavoriteMealPage } from "./pages/Meals/PersonFavoriteMeals";
 import { ShoppingList } from "./pages/ShoppingList";
 import environment from "./relay/environment";
-import { fetchCurrentPerson, initState, updatePersonTerms } from "./state/state";
-import TermsAndConditions from './pages/TermsAndConditionsModal';
+import { fetchCurrentPerson, initState } from "./state/state";
+import { AcceptedTerms } from './AcceptedTerms';
 
 const theme = createTheme({
   palette: {
@@ -45,23 +45,16 @@ initState();
 
 function App() {
   let [intialized, setInitialized] = useState(false);
-  let [acceptedTermsAndConditions, setAcceptedTermsAndConditions] = useState(false);
-
-  const handleTermsAndConditions = (accepted: boolean): void => {
-    updatePersonTerms(accepted);
-    setAcceptedTermsAndConditions(accepted);
-  }
 
   useEffect(() => {
-    fetchCurrentPerson().then((data) => {
-      const accepted = data?.currentPerson?.termsAndConditions || false;
-      setAcceptedTermsAndConditions(accepted); 
+    fetchCurrentPerson().then(() => {
       setInitialized(true);
     });
   }, []);
   if (!intialized) {
     return <h1>loading...</h1>;
   }
+
   return (
     <RelayEnvironmentProvider environment={environment}>
       <ThemeProvider theme={theme}>
@@ -90,18 +83,13 @@ function App() {
             <Route
               path="/mealplans"
               element={
-                <Suspense fallback={"loading Mealplans list..."}>
-                  <LoggedIn>
-                    {!acceptedTermsAndConditions ? (
-                      <TermsAndConditions
-                        acceptedTermsAndConditions={acceptedTermsAndConditions}
-                        handleTermsAndConditions={handleTermsAndConditions}
-                      />
-                    ) : (
+                <LoggedIn>
+                  <AcceptedTerms>
+                    <Suspense fallback={"loading Mealplans list..."}>
                       <MealPlans />
-                    )}
-                  </LoggedIn>
-                </Suspense>
+                    </Suspense>
+                  </AcceptedTerms>
+                </LoggedIn>
               }
             />
             <Route
