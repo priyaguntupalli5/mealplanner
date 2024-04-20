@@ -9,7 +9,10 @@ export const LoggedIn = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isLogoutPage = location.pathname === '/';
   const isTermsPage = location.pathname === '/terms';
+  const isMealsPage = location.pathname === '/meals';
 
+  if(isMealsPage && getCurrentPerson().personID === "")
+    return <Navigate to="/meals" replace/>;
   if (getCurrentPerson().personID === "") return <Navigate to="/" />;
     if (!isLogoutPage && !isTermsPage && !getCurrentPerson().personTerms) {
       return <Navigate to = "/terms" replace/>;
