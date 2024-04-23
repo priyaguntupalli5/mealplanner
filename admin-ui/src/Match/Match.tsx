@@ -28,6 +28,7 @@ const getProducts = gql`
           nameEn
           price
           quantity
+          unit
           imageUrl
           sourceUrl
           upc
@@ -230,6 +231,7 @@ export const Match = (props: CreateProps) => {
           { field: "nameEn", headerName: "Product Name", width: 500 },
           { field: "price", headerName: "Price", width: 200 },
           { field: "quantity", headerName: "Quantity", width: 200 },
+          { field: "unit", headerName: "Unit", width: 200 },
           {
             field: "imageUrl",
             headerName: "Image",
