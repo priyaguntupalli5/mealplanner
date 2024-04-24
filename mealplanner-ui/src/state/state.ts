@@ -194,6 +194,7 @@ const currentUserQuery = graphql`
       fullName
       role
       slug
+      termsAndConditions
     }
   }
 `;
@@ -218,6 +219,7 @@ function setCurrentUser(data: state_CurrentUserQuery$data | undefined) {
       record.setValue(data?.currentPerson?.fullName, "personName");
       record.setValue(data?.currentPerson?.role, "personRole");
       record.setValue(data.currentPerson?.slug, "personSlug");
+      record.setValue(data.currentPerson?.termsAndConditions, "personTerms");
       localState?.setLinkedRecord(record, "currentUser");
     });
   }
@@ -287,17 +289,19 @@ export const getCurrentPerson = (): {
   personName: string;
   personRole: string;
   personSlug: string;
+  personTerms: boolean;
 } => {
   const store = environment.getStore();
   let record = store.getSource().get("client:currentUser");
   if (record === null || record === undefined) {
-    return { personID: "", personName: "", personRole: "", personSlug: "" };
+    return { personID: "", personName: "", personRole: "", personSlug: "", personTerms: false };
   }
   return {
     personID: record["personID"].toString(),
     personName: record["personName"].toString(),
     personRole: record["personRole"].toString(),
     personSlug: record["personSlug"].toString(),
+    personTerms: Boolean(record["personTerms"]),
   };
 };
 
@@ -450,3 +454,32 @@ export const createMealPlan = (input: createMealPlanInput) => {
     });
   });
 };
+
+
+
+const termsAndConditionsGQL = graphql`
+  mutation state_UpdatePersonTermsMutation($personTerms: Boolean!) {
+    updatePersonTerms(input: { personTerms: $personTerms }) {
+      preflight
+    }
+  }
+`;
+
+export const updatePersonTerms = (accepted: boolean) => {
+    return new Promise((res, rej) => {
+      commitMutation(environment, {
+        mutation: termsAndConditionsGQL,
+        variables: {
+          personTerms: accepted,
+        },
+        onCompleted(response, errors) {
+          if (!errors) {
+            res(response);
+            return;
+          }
+          rej(errors);
+        },
+      });
+    });
+  };
+  
