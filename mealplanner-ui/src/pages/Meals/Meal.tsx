@@ -294,7 +294,7 @@ export const Meal = () => {
               variant="body1"
               sx={{
                 "#ingredientsTable tbody tr:nth-of-type(even)": {
-                  backgroundColor: `${theme.palette.action.selected}` 
+                  backgroundColor: `${theme.palette.info.light}` 
                 },
                 "#ingredientsTable": {
                   border: `1px solid ${theme.palette.info.dark}`,
@@ -312,7 +312,7 @@ export const Meal = () => {
               <>
                 <table id="ingredientsTable" cellSpacing="0" cellPadding="0">
                   <thead>
-                    <tr style={{ backgroundColor: `${theme.palette.action.selected}` }}>
+                    <tr style={{ backgroundColor: `${theme.palette.info.light}` }}>
                       <th style={{ textAlign: "left" }}>Ingredients</th>
                       <th style={{ textAlign: "center" }}>Qtt</th>
                       <th style={{ textAlign: "center" }}>Unit</th>
