@@ -1,0 +1,1 @@
+drop function if exists app.ingredient_keyword_products(app.ingredient);
