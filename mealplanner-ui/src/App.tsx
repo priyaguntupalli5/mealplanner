@@ -35,6 +35,7 @@ const theme = createTheme({
     },
     info: {
       main: "#ffffff",
+      light: "#DAF1DC"
     },
   },
 });
